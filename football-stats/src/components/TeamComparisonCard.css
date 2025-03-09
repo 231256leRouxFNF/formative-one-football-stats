@@ -1,0 +1,33 @@
+/* TeamComparisonCard.css */
+.team-comparison-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space between the cards */
+  gap: 10px; /* Reduce the gap between the cards */
+  flex-wrap: wrap;
+  margin-top: 50px; /* Lower the cards */
+  padding: 0 20px; /* Add space around the cards */
+}
+
+.team-comparison-card {
+  flex: 1;
+  min-width: 250px; /* Make the cards thinner */
+  max-width: 300px; /* Ensure the cards don't get too wide */
+  background: #0D0D0D;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+}
+
+.team-comparison-card h2 {
+  margin-top: 0;
+}
+
+.team-comparison-card p {
+  margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+  .team-comparison-container {
+    flex-direction: column; /* Stack the cards vertically on smaller screens */
+  }
+}
