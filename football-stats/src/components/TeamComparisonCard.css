@@ -1,0 +1,48 @@
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px; /* Adjust the top margin to lower the cards */
+  min-height: 400px; /* Add minimum height to the cards */
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.bg-dark {
+  background-color: #343a40 !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Additional styles for the container */
+.team-comparison-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space between the cards */
+  gap: 10px; /* Adjust the gap between the cards */
+  flex-wrap: wrap;
+  margin-top: 50px; /* Lower the cards */
+  padding: 0 20px; /* Add space around the cards */
+}
+
+@media (max-width: 768px) {
+  .team-comparison-container {
+    flex-direction: column; /* Stack the cards vertically on smaller screens */
+  }
+}
