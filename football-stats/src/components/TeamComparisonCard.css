@@ -1,44 +1,53 @@
 .card {
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px; /* Rounded corners for the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for the card */
   margin-top: 20px; /* Adjust the top margin to lower the cards */
   min-height: 400px; /* Add minimum height to the cards */
 }
 
 .card-body {
-  padding: 20px;
+  padding: 20px; /* Padding inside the card body */
 }
 
 .card-title {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+  font-size: 1.5rem; /* Font size for the card title */
+  margin-bottom: 10px; /* Margin below the card title */
 }
 
 .card-text {
-  font-size: 1rem;
-  margin-bottom: 5px;
+  font-size: 1rem; /* Font size for the card text */
+  margin-bottom: 5px; /* Margin below the card text */
 }
 
 .bg-dark {
-  background-color: #343a40 !important;
+  background-color: #343a40 !important; /* Dark background color */
 }
 
 .text-white {
-  color: #fff !important;
+  color: #fff !important; /* White text color */
 }
 
 .mb-4 {
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 1.5rem !important; /* Bottom margin for the card */
 }
 
 /* Additional styles for the container */
 .team-comparison-container {
   display: flex;
   justify-content: space-between; /* Distribute space between the cards */
-  gap: 10px; /* Adjust the gap between the cards */
+  gap: 50px; /* Adjust the gap between the cards */
   flex-wrap: wrap;
   margin-top: 50px; /* Lower the cards */
   padding: 0 20px; /* Add space around the cards */
+}
+
+.chart-container {
+  margin-top: 20px; /* Adjust the top margin of the charts */
+}
+
+.small-chart-container {
+  width: 300px; /* Set a fixed width for the smaller chart */
+  margin: 0 auto; /* Center the smaller chart */
 }
 
 @media (max-width: 768px) {
