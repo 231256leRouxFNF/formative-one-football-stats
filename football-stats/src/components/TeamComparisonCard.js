@@ -1,5 +1,6 @@
 import React from 'react';
-import './TeamComparisonCard.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const TeamComparisonCard = ({ team }) => {
   console.log('TeamComparisonCard component rendered');
@@ -10,13 +11,15 @@ const TeamComparisonCard = ({ team }) => {
   }
 
   return (
-    <div className="team-comparison-card">
-      <h2>{team.name}</h2>
-      <p>Wins: {team.wins}</p>
-      <p>Losses: {team.losses}</p>
-      <p>Draws: {team.draws}</p>
-      <p>Goals Scored: {team.goalsScored}</p>
-      <p>Goals Conceded: {team.goalsConceded}</p>
+    <div className="card bg-dark text-white mb-4">
+      <div className="card-body">
+        <h2 className="card-title">{team.name}</h2>
+        <p className="card-text">Wins: {team.wins}</p>
+        <p className="card-text">Losses: {team.losses}</p>
+        <p className="card-text">Draws: {team.draws}</p>
+        <p className="card-text">Goals Scored: {team.goalsScored}</p>
+        <p className="card-text">Goals Conceded: {team.goalsConceded}</p>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import React from 'react';
 import TeamComparisonCard from '../components/TeamComparisonCard';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../components/TeamComparisonCard.css'; // Import the CSS file
 
 console.log('ComparisonPage.js loaded');
 
@@ -25,11 +27,15 @@ const ComparisonPage = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <h1>Comparison Page</h1>
-      <div className="team-comparison-container">
-        <TeamComparisonCard team={teamA} />
-        <TeamComparisonCard team={teamB} />
+      <div className="row">
+        <div className="col-md-6">
+          <TeamComparisonCard team={teamA} />
+        </div>
+        <div className="col-md-6">
+          <TeamComparisonCard team={teamB} />
+        </div>
       </div>
     </div>
   );

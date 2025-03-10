@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import CustomNavbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ComparisonPage from './pages/ComparisonPage';
 import TimelinePage from './pages/TimelinePage';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 console.log('App.js loaded');
 
@@ -12,7 +13,7 @@ export default function App() {
   return (
     <Router>
       <div style={{ display: 'flex' }}>
-        <Navbar />
+        <CustomNavbar />
         <div style={{ flex: 1, paddingLeft: '100px' }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
