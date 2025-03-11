@@ -23,11 +23,11 @@ const ComparisonPage = () => {
 
   const teamB = {
     name: 'Team B',
-    wins: 8,
-    losses: 7,
-    draws: 3,
-    goalsScored: 20,
-    goalsConceded: 18,
+    // wins: 8,
+    // losses: 7,
+    // draws: 3,
+    // goalsScored: 20,
+    // goalsConceded: 18,
   };
 
   // Chart options to move the legend below the chart

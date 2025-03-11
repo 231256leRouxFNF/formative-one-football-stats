@@ -1,7 +1,6 @@
 import React from 'react';
 import { Bar, Pie, Radar, Line } from 'react-chartjs-2';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './TeamComparisonCard.css';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, RadialLinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, RadialLinearScale, PointElement, LineElement, Title, Tooltip, Legend);
