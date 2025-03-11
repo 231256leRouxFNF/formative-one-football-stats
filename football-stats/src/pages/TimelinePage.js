@@ -5,10 +5,12 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-console.log('TimelinePage.js loaded');
+console.log('TimelinePage: ANAKIN: Dont lecture me, Obi-Wan. I see through the lies of the Jedi. I do not fear the dark side as you do. I have brought peace, justice, freedom, and security to my new Empire.');
+
 
 const TimelinePage = () => {
-  console.log('TimelinePage component rendered');
+  console.log('TimelinePage: OBI-WAN: Your new Empire?');
+
 
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -51,4 +53,7 @@ const TimelinePage = () => {
   );
 };
 
+  console.log('TimelinePage: ANAKIN: Dont make me kill you.');
+
+  
 export default TimelinePage;

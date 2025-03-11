@@ -2,11 +2,15 @@ import React from 'react';
 import TeamComparisonCard from '../components/TeamComparisonCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/TeamComparisonCard.css'; // Import the CSS file
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-console.log('ComparisonPage.js loaded');
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+console.log('ComparisonPage: ANAKIN: Dont lecture me, Obi-Wan. I see through the lies of the Jedi. I do not fear the dark side as you do. I have brought peace, justice, freedom, and security to my new Empire.');
+
 
 const ComparisonPage = () => {
-  console.log('ComparisonPage component rendered');
+  console.log('ComparisonPage: OBI-WAN: Your new Empire?');
 
   const teamA = {
     name: 'Team A',
@@ -26,19 +30,30 @@ const ComparisonPage = () => {
     goalsConceded: 18,
   };
 
+  // Chart options to move the legend below the chart
+  const chartOptions = {
+    plugins: {
+      legend: {
+        position: 'bottom', // Move the legend to the bottom
+      },
+    },
+  };
+
   return (
     <div className="container mt-5">
       <h1>Comparison Page</h1>
       <div className="row">
         <div className="col-md-6">
-          <TeamComparisonCard team={teamA} />
+          <TeamComparisonCard team={teamA} chartOptions={chartOptions} />
         </div>
         <div className="col-md-6">
-          <TeamComparisonCard team={teamB} />
+          <TeamComparisonCard team={teamB} chartOptions={chartOptions} />
         </div>
       </div>
     </div>
   );
 };
+
+console.log('ComparisonPage: ANAKIN: Dont make me kill.');
 
 export default ComparisonPage;

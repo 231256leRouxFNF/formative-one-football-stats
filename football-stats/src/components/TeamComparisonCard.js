@@ -1,6 +1,6 @@
 import React from 'react';
+import { Bar, Pie, Radar, Line } from 'react-chartjs-2';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Bar, Pie, Radar } from 'react-chartjs-2';
 import './TeamComparisonCard.css';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, RadialLinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -59,6 +59,28 @@ const TeamComparisonCard = ({ team }) => {
     ],
   };
 
+  const lineData = {
+    labels: ['Wins', 'Losses', 'Draws', 'Goals Scored', 'Goals Conceded'],
+    datasets: [
+      {
+        label: team.name,
+        data: [team.wins, team.losses, team.draws, team.goalsScored, team.goalsConceded],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Chart options to move the legend below the chart
+  const chartOptions = {
+    plugins: {
+      legend: {
+        position: 'bottom', // Move the legend to the bottom
+      },
+    },
+  };
+
   return (
     <div className="card bg-dark text-white mb-4">
       <div className="card-body">
@@ -66,16 +88,16 @@ const TeamComparisonCard = ({ team }) => {
         <div className="row">
           <div className="col-md-6 chart-container">
             <h3>Recent Goals Comparison</h3>
-            <Bar data={barData} />
+            <Bar data={barData} options={chartOptions} />
           </div>
           <div className="col-md-6 chart-container">
             <h3>Match Outcomes</h3>
-            <Pie data={pieData} />
+            <Pie data={pieData} options={chartOptions} />
           </div>
         </div>
         <div className="chart-container mt-4 small-chart-container">
           <h3>Team Strengths</h3>
-          <Radar data={radarData} />
+          <Radar data={radarData} options={chartOptions} />
         </div>
       </div>
     </div>

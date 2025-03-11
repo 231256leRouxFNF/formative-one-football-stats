@@ -3,19 +3,22 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for the card */
   margin-top: 20px; /* Adjust the top margin to lower the cards */
   min-height: 400px; /* Add minimum height to the cards */
+  width: 100%; /* Adjust the width to fit within the container */
+  max-width: 500px; /* Set a maximum width for the cards */
+  margin: 0 auto; /* Center the cards within the column */
 }
 
 .card-body {
-  padding: 20px; /* Padding inside the card body */
+  padding: 10px; /* Reduce padding to make the card content more compact */
 }
 
 .card-title {
-  font-size: 1.5rem; /* Font size for the card title */
+  font-size: 1.25rem; /* Adjust the font size of the card title */
   margin-bottom: 10px; /* Margin below the card title */
 }
 
 .card-text {
-  font-size: 1rem; /* Font size for the card text */
+  font-size: 1rem; /* Adjust the font size of the card text */
   margin-bottom: 5px; /* Margin below the card text */
 }
 
@@ -46,7 +49,7 @@
 }
 
 .small-chart-container {
-  width: 300px; /* Set a fixed width for the smaller chart */
+  width: 350px; /* Set a fixed width for the smaller chart */
   margin: 0 auto; /* Center the smaller chart */
 }
 
