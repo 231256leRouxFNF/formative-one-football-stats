@@ -2,7 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale } from 'chart.js';
+import { Radar, Bar } from 'react-chartjs-2';
 import CardComponent from '../components/CardComponent';
+import Footer from '../components/Footer'; // Importing the Footer component
+import './HomePage.css'; // Importing the CSS file for styling
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale);
 
@@ -36,34 +39,93 @@ const HomePage = () => {
   console.log('HomePage component rendered');
   console.log('HomePage: General Kenobi');
 
+  // Data for the radar chart
+  const radarData = {
+    labels: ['Wins', 'Losses', 'Draws', 'Goals Scored', 'Goals Conceded'],
+    datasets: [
+      {
+        label: cardData.teamComparison.teamA.name,
+        data: [
+          cardData.teamComparison.teamA.wins,
+          cardData.teamComparison.teamA.losses,
+          cardData.teamComparison.teamA.draws,
+          cardData.teamComparison.teamA.goalsScored,
+          cardData.teamComparison.teamA.goalsConceded,
+        ],
+        backgroundColor: 'rgba(0, 100, 0, 0.2)', // Dark green with transparency
+        borderColor: 'rgba(0, 100, 0, 1)', // Dark green
+        borderWidth: 1,
+      },
+      {
+        label: cardData.teamComparison.teamB.name,
+        data: [
+          cardData.teamComparison.teamB.wins,
+          cardData.teamComparison.teamB.losses,
+          cardData.teamComparison.teamB.draws,
+          cardData.teamComparison.teamB.goalsScored,
+          cardData.teamComparison.teamB.goalsConceded,
+        ],
+        backgroundColor: 'rgba(255, 0, 0, 0.2)', // Red with transparency
+        borderColor: 'rgba(255, 0, 0, 1)', // Red
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  // Data for the bar chart
+  const barData = {
+    labels: cardData.goalsPerTeam.map(team => team.name),
+    datasets: [
+      {
+        label: 'Goals',
+        data: cardData.goalsPerTeam.map(team => team.goals),
+        backgroundColor: 'rgba(0, 0, 255, 0.2)', // Blue with transparency
+        borderColor: 'rgba(0, 0, 255, 1)', // Blue
+        borderWidth: 1,
+      },
+    ],
+  };
+
   // Returning the JSX to render the component
   return (
-    <div className="container mt-5">
-      <h1>Recent matches</h1>
+    <div className="container">
+      <h1 className="my-4">Homepage</h1>
       <div className="row">
-        {/* Top row with 3 smaller cards */}
-        {cardData.recentMatches.slice(0, 3).map((match, index) => (
-          <div className="col-md-4 mb-3" key={index}>
-            <CardComponent type="match" data={match} />
+        {cardData.recentMatches.map((match, index) => (
+          <div className="col-md-3" key={index}>
+            <CardComponent match={match} />
           </div>
         ))}
-      </div>
-      <div className="row">
-        {/* Right side with 1 card */}
-        <div className="col-md-4 mb-3">
-          <CardComponent type="teamComparison" data={cardData.teamComparison} />
-        </div>
-        {/* Middle row with 1 big card */}
-        <div className="col-md-8 mb-3">
-          <CardComponent type="goalsPerTeam" data={cardData.goalsPerTeam} />
+        <div className="col-md-3">
+          <div className="card short-card">
+            <div className="card-body">
+              <h5 className="card-title">Team Comparison</h5>
+              <Radar data={radarData} width={300} height={300} />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="row">
-        {/* Right side with 1 card */}
-        <div className="col-md-4 mb-3">
-          <CardComponent type="topScorer" data={cardData.topScorer} />
+      <div className="row mt-4">
+        <div className="col-md-9">
+          <div className="card short-card">
+            <div className="card-body">
+              <h5 className="card-title">Top 5 Teams Goals</h5>
+              <Bar data={barData} />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-3">
+          <div className="card short-card">
+            <div className="card-body">
+              <h5 className="card-title">Top Scorer</h5>
+              <p>{cardData.topScorer.name}</p>
+              <p>Goals: {cardData.topScorer.goals}</p>
+              <img src={cardData.topScorer.image} alt={`${cardData.topScorer.name} image`} style={{ width: '100px', height: '100px', borderRadius: '50%', border: '2px solid #006400' }} />
+            </div>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

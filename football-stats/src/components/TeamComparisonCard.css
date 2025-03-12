@@ -6,15 +6,20 @@
   width: 100%; /* Adjust the width to fit within the container */
   max-width: 500px; /* Set a maximum width for the cards */
   margin: 0 auto; /* Center the cards within the column */
+  border: 1px solid #006400; /* Dark green border */
+  margin-bottom: 20px;
 }
 
 .card-body {
   padding: 10px; /* Reduce padding to make the card content more compact */
+  background-color: #ffffff; /* White background */
+  color: #000000; /* Black text */
 }
 
 .card-title {
   font-size: 1.25rem; /* Adjust the font size of the card title */
   margin-bottom: 10px; /* Margin below the card title */
+  color: #006400; /* Dark green */
 }
 
 .card-text {

@@ -8,7 +8,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 console.log('ComparisonPage: ANAKIN: Dont lecture me, Obi-Wan. I see through the lies of the Jedi. I do not fear the dark side as you do. I have brought peace, justice, freedom, and security to my new Empire.');
 
-
 const ComparisonPage = () => {
   console.log('ComparisonPage: OBI-WAN: Your new Empire?');
 
@@ -23,11 +22,11 @@ const ComparisonPage = () => {
 
   const teamB = {
     name: 'Team B',
-    // wins: 8,
-    // losses: 7,
-    // draws: 3,
-    // goalsScored: 20,
-    // goalsConceded: 18,
+    wins: 8,
+    losses: 7,
+    draws: 3,
+    goalsScored: 20,
+    goalsConceded: 18,
   };
 
   // Chart options to move the legend below the chart
@@ -41,7 +40,7 @@ const ComparisonPage = () => {
 
   return (
     <div className="container mt-5">
-      <h1>Comparison Page</h1>
+      <h1 style={{ color: '#006400' }}>Comparison Page</h1>
       <div className="row">
         <div className="col-md-6">
           <TeamComparisonCard team={teamA} chartOptions={chartOptions} />

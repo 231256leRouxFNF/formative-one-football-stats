@@ -14,7 +14,7 @@ export default function App() {
     <Router>
       <div style={{ display: 'flex' }}>
         <CustomNavbar />
-        <div style={{ flex: 1, paddingLeft: '100px' }}>
+        <div style={{ flex: 1, }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/compare" element={<ComparisonPage />} />

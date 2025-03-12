@@ -39,12 +39,13 @@
 }
 
 .share-btn {
-  background-color: #FFD700; /* Golden yellow button */
+  background-color: #f2ce00; /* Golden yellow button */
   color: #1B8C45; /* Green text */
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  margin-top: auto;
+  margin-top: auto; /* Pushes the button to the bottom */
+  margin-bottom: 75px; /* Adjust this value to move the button up or down */
   border-radius: 5px;
   font-weight: bold;
   transition: all 0.3s ease;
@@ -79,5 +80,5 @@
   .share-btn {
     background-color: #FFD700;
     color: #145732; /* Match mobile navbar color */
-  }
+    }
 }

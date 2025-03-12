@@ -7,10 +7,8 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 console.log('TimelinePage: ANAKIN: Dont lecture me, Obi-Wan. I see through the lies of the Jedi. I do not fear the dark side as you do. I have brought peace, justice, freedom, and security to my new Empire.');
 
-
 const TimelinePage = () => {
   console.log('TimelinePage: OBI-WAN: Your new Empire?');
-
 
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -19,15 +17,15 @@ const TimelinePage = () => {
         label: 'Team A Performance',
         data: [65, 59, 80, 81, 56, 55, 40],
         fill: false,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
+        backgroundColor: 'rgba(0, 100, 0, 0.4)', // Dark green with transparency
+        borderColor: 'rgba(0, 100, 0, 1)', // Dark green
       },
       {
         label: 'Team B Performance',
         data: [28, 48, 40, 19, 86, 27, 90],
         fill: false,
-        backgroundColor: 'rgba(153,102,255,0.4)',
-        borderColor: 'rgba(153,102,255,1)',
+        backgroundColor: 'rgba(255, 0, 0, 0.4)', // Red with transparency
+        borderColor: 'rgba(255, 0, 0, 1)', // Red
       },
     ],
   };
@@ -47,13 +45,12 @@ const TimelinePage = () => {
 
   return (
     <div className="container mt-5">
-      <h1>Timeline Page</h1>
+      <h1 style={{ color: '#006400' }}>Timeline Page</h1>
       <Line data={data} options={options} />
     </div>
   );
 };
 
-  console.log('TimelinePage: ANAKIN: Dont make me kill you.');
+console.log('TimelinePage: ANAKIN: Dont make me kill you.');
 
-  
 export default TimelinePage;

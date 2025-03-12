@@ -1,0 +1,47 @@
+.container {
+  margin-top: 20px;
+  background-color: #f0f0f0; /* Light grey background */
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #006400; /* Dark green */
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+.top-row {
+  margin-bottom: 20px;
+}
+
+.col-md-4, .col-md-8 {
+  padding: 10px;
+}
+
+.card {
+  border: 1px solid #006400; /* Dark green border */
+  border-radius: 5px;
+  padding: 15px;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
+.card-title {
+  color: #006400; /* Dark green */
+}
+
+.short-card {
+  background-color: #ffffff; /* White background */
+}
+
+.card-body {
+  color: #000000; /* Black text */
+}
+
+.card-body img {
+  border-radius: 50%;
+  border: 2px solid #006400; /* Dark green border */
+}
