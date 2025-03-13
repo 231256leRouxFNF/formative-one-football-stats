@@ -45,7 +45,7 @@ const TimelinePage = () => {
 
   return (
     <div className="container mt-5">
-      <h1 style={{ color: '#006400' }}>Timeline Page</h1>
+      <h1 className="page-title">Timeline</h1>
       <Line data={data} options={options} />
     </div>
   );

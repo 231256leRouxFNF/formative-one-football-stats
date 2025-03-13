@@ -89,7 +89,7 @@ const HomePage = () => {
   // Returning the JSX to render the component
   return (
     <div className="container">
-      <h1 className="my-4">Homepage</h1>
+      <h1 className="page-title">Home</h1>
       <div className="row">
         {cardData.recentMatches.map((match, index) => (
           <div className="col-md-3" key={index}>
