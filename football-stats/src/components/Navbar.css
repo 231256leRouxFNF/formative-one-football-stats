@@ -26,7 +26,7 @@
 }
 
 .nav-link {
-  color: white;
+  color: #ffffff !important; /* White text */
   text-decoration: none;
   transition: all 0.3s ease;
   padding: 8px;
@@ -36,11 +36,12 @@
 .nav-link:hover {
   background-color: #145732; /* Darker green hover */
   transform: scale(1.1);
+  color: #ffcc00 !important; /* Yellow text on hover */
 }
 
 .share-btn {
-  background-color: #f2ce00; /* Golden yellow button */
-  color: #1B8C45; /* Green text */
+  background-color: #ffcc00; /* Yellow background */
+  color: #000000; /* Black text */
   border: none;
   padding: 10px 20px;
   cursor: pointer;
@@ -52,7 +53,8 @@
 }
 
 .share-btn:hover {
-  background-color: #E6C300; /* Darker gold */
+  background-color: #ffffff; /* White background on hover */
+  color: #000000; /* Black text on hover */
 }
 
 /* Mobile responsiveness */
@@ -80,5 +82,9 @@
   .share-btn {
     background-color: #FFD700;
     color: #145732; /* Match mobile navbar color */
-    }
+  }
+}
+
+.navbar {
+  background-color: #006400; /* Dark green background */
 }
