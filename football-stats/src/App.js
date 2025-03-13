@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import ComparisonPage from './pages/ComparisonPage';
 import TimelinePage from './pages/TimelinePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from './components/Footer';
 
 console.log('App.js loaded');
 
@@ -14,7 +15,7 @@ export default function App() {
     <Router>
       <div style={{ display: 'flex' }}>
         <CustomNavbar />
-        <div style={{ flex: 1, }}>
+        <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/compare" element={<ComparisonPage />} />
@@ -22,6 +23,7 @@ export default function App() {
           </Routes>
         </div>
       </div>
+      <Footer />
     </Router>
   );
 }
