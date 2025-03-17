@@ -31,6 +31,9 @@
   transition: all 0.3s ease;
   padding: 8px;
   border-radius: 4px;
+  margin: 15px 0;
+  font-size: 1.2em;
+  transition: color 0.3s;
 }
 
 .nav-link:hover {
@@ -46,7 +49,7 @@
   padding: 10px 20px;
   cursor: pointer;
   margin-top: auto; /* Pushes the button to the bottom */
-  margin-bottom: 75px; /* Adjust this value to move the button up or down */
+  margin-bottom: 20px; /* Adjust this value to move the button up or down */
   border-radius: 5px;
   font-weight: bold;
   transition: all 0.3s ease;
@@ -87,4 +90,16 @@
 
 .navbar {
   background-color: #006400; /* Dark green background */
+}
+
+.side-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }

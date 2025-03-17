@@ -7,7 +7,7 @@ import logo from '../imgs/Logo.svg'; // Import the logo image with the correct c
 
 const CustomNavbar = () => {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="flex-column vh-100">
+    <Navbar bg="dark" variant="dark" expand="lg" className="flex-column vh-100 side-navbar">
       <Navbar.Brand href="/" className="mb-4">
         <img src={logo} alt="Football Stats Logo" style={{ width: '120px', height: '120px' }} />
       </Navbar.Brand>
@@ -16,7 +16,7 @@ const CustomNavbar = () => {
         <Nav.Link as={Link} to="/compare" className="nav-link">Compare</Nav.Link>
         <Nav.Link as={Link} to="/timeline" className="nav-link">Timeline</Nav.Link>
       </Nav>
-      <Button variant="outline-light" className="share-btn">Share</Button>
+      <Button variant="outline-light" className="share-btn mt-auto">Share</Button>
     </Navbar>
   );
 };

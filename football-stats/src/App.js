@@ -15,7 +15,6 @@ export default function App() {
   console.log('App component rendered');
   return (
     <Router>
-      <div style={{ display: 'flex' }}>
         <CustomNavbar />
         <div style={{ flex: 1 }}>
           <Routes>
@@ -24,8 +23,7 @@ export default function App() {
             <Route path="/timeline" element={<TimelinePage />} />
           </Routes>
         </div>
-      </div>
-      <Footer />
+        <Footer />
     </Router>
   );
 }
