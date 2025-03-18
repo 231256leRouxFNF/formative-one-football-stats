@@ -16,7 +16,7 @@ const CustomNavbar = () => {
         <Nav.Link as={Link} to="/compare" className="nav-link">Compare</Nav.Link>
         <Nav.Link as={Link} to="/timeline" className="nav-link">Timeline</Nav.Link>
       </Nav>
-      <Button variant="outline-light" className="share-btn mt-auto">Share</Button>
+      <Button variant="outline-light" className="share-btn mt-4">Share</Button>
     </Navbar>
   );
 };
