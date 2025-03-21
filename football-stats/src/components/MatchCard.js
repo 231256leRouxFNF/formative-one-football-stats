@@ -1,30 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card, CardContent, Typography } from '@mui/material';
 import './MatchCard.css';
 
 const MatchCard = ({ match }) => {
   return (
-    <div className="match-card">
-      <div className="team">
-        <h2>{match.homeTeam}</h2>
-        <p>{match.homeScore}</p>
-      </div>
-      <div className="versus">VS</div>
-      <div className="team">
-        <h2>{match.awayTeam}</h2>
-        <p>{match.awayScore}</p>
-      </div>
-    </div>
+    <Card className="match-card">
+      <CardContent className="match-card-content">
+        <Typography variant="h5" component="div">
+          {match.team1} vs {match.team2}
+        </Typography>
+        <Typography variant="body2">
+          Score: {match.score1} - {match.score2}
+        </Typography>
+        <Typography variant="body2">
+          Date: {match.date}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
 MatchCard.propTypes = {
   match: PropTypes.shape({
-    homeTeam: PropTypes.string.isRequired,
-    awayTeam: PropTypes.string.isRequired,
-    homeScore: PropTypes.number.isRequired,
-    awayScore: PropTypes.number.isRequired
-  }).isRequired
+    team1: PropTypes.string.isRequired,
+    team2: PropTypes.string.isRequired,
+    score1: PropTypes.number.isRequired,
+    score2: PropTypes.number.isRequired,
+    date: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default MatchCard;
