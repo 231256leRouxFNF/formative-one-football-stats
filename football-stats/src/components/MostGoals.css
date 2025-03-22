@@ -1,0 +1,22 @@
+.container {
+  padding: 20px;
+}
+
+.page-title {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.col-md-4 {
+  padding-left: 2px; /* Reduced padding */
+  padding-right: 2px; /* Reduced padding */
+}
+
+.match-card {
+  margin-bottom: 10px; /* Reduced margin */
+}
