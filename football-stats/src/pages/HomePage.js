@@ -69,14 +69,6 @@ const HomePage = () => {
           <TopCard />
           <BottomCard />
         </div>
-        {recentMatches.map((match, index) => (
-          <div key={index} className="col-md-4">
-            <MatchCard match={match} />
-          </div>
-        ))}
-      </div>
-      <div className="row mt-4">
-        {/* More components can be added here */}
       </div>
     </div>
   );

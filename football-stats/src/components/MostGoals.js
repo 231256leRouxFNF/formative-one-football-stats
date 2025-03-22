@@ -41,9 +41,6 @@ const chart = (
         />
       </BarChart>
     </CardContent>
-    <CardActions>
-      <Button size="small">View Details</Button>
-    </CardActions>
   </React.Fragment>
 );
 
