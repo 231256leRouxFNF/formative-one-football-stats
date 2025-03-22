@@ -1,8 +1,5 @@
 .qodo
 
 # Ignore ALL node_modules folders, anywhere in the project
-**/node_modules/
 
 # Ignore cache files
-*.cache
-node_modules

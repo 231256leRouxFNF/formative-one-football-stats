@@ -7,6 +7,13 @@ import Footer from '../components/Footer'; // Importing the Footer component
 import './HomePage.css'; // Importing the CSS file for styling
 import '../Styles/global.css';
 import MatchCard from '../components/MatchCard';
+import Footer from '../components/Footer';
+import './HomePage.css';
+import '../Styles/global.css';
+import MatchCard from '../components/MatchCard';
+import MostGoals from '../components/MostGoals';
+import TopCard from '../components/TopCard';
+import BottomCard from '../components/BottomCard';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale);
 
@@ -47,6 +54,24 @@ const HomePage = () => {
     <div className="container">
       <h1 className="page-title"><b>Recent Matches</b></h1>
       <div className="row">
+        <div className="col-md-8">
+          <div className="row">
+            {recentMatches.map((match, index) => (
+              <div key={index} className="col-md-4">
+                <MatchCard match={match} />
+              </div>
+            ))}
+          </div>
+          <div className="row mt-4">
+            <div className="col-md-12">
+              <MostGoals />
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <TopCard />
+          <BottomCard />
+        </div>
         {recentMatches.map((match, index) => (
           <div key={index} className="col-md-4">
             <MatchCard match={match} />
