@@ -3,14 +3,11 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale } from 'chart.js';
 import { Radar, Bar } from 'react-chartjs-2';
-import Footer from '../components/Footer'; // Importing the Footer component
-import './HomePage.css'; // Importing the CSS file for styling
 import '../Styles/global.css';
 import MatchCard from '../components/MatchCard';
 import Footer from '../components/Footer';
 import './HomePage.css';
 import '../Styles/global.css';
-import MatchCard from '../components/MatchCard';
 import MostGoals from '../components/MostGoals';
 import TopCard from '../components/TopCard';
 import BottomCard from '../components/BottomCard';
