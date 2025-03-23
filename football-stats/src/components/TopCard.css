@@ -1,0 +1,16 @@
+.top-card {
+    height: 400px; /* Adjust height as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    margin-bottom: 20px; /* Add some space below the card */
+  }
+  
+  .top-card-content {
+    padding: 20px;
+  }
+  
+  .top-card-chart {
+    display: flex;
+    justify-content: center; /* Center chart horizontally */
+  }

@@ -5,41 +5,45 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip, Legend } from 'recharts';
+import './TopCard.css';
 
-// Sample data for the bar chart
+// Sample data for the radar chart
 const data = [
-  { name: 'Jan', uv: 4000 },
-  { name: 'Feb', uv: 3000 },
-  { name: 'Mar', uv: 6000 },
-  { name: 'Apr', uv: 2780 },
-  { name: 'May', uv: 1890 },
-  { name: 'Jun', uv: 2390 },
+  { attribute: 'Attack', value: 80 },
+  { attribute: 'Defense', value: 70 },
+  { attribute: 'Speed', value: 90 },
+  { attribute: 'Strength', value: 85 },
+  { attribute: 'Stamina', value: 75 },
 ];
 
 const chart = (
   <React.Fragment>
     <CardContent>
       <Typography variant="h6" gutterBottom>
-        Monthly Sales Report
+        Team Attributes
       </Typography>
-      <BarChart
+      <RadarChart
+        cx={200}
+        cy={150}
+        outerRadius={100}
         width={400}
         height={300}
         data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <PolarGrid />
+        <PolarAngleAxis dataKey="attribute" />
+        <PolarRadiusAxis />
         <Tooltip />
         <Legend />
-        <Bar 
-          dataKey="uv" 
-          name="Monthly Sales" 
-          fill="#1976d2" // Using MUI primary color
+        <Radar
+          name="Team A"
+          dataKey="value"
+          stroke="#1976d2"
+          fill="#1976d2"
+          fillOpacity={0.6}
         />
-      </BarChart>
+      </RadarChart>
     </CardContent>
   </React.Fragment>
 );

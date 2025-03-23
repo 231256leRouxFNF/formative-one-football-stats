@@ -2,8 +2,14 @@
   min-width: 200px;
   max-width: 300px;
   margin: 10px;
+  height: 200px; /* Increased height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  
 }
 
 .match-card-content {
   padding: 20px;
+  
 }

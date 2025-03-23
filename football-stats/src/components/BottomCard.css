@@ -1,0 +1,21 @@
+.bottom-card {
+  height: 400px; /* Adjust height as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  margin-bottom: 20px; /* Add some space below the card */
+}
+
+.bottom-card-content {
+  padding: 20px;
+}
+
+.bottom-card-image {
+  width: 100%;
+}
+
+.bottom-card-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center text vertically */
+}

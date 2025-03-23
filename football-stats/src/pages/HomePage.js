@@ -1,24 +1,21 @@
-// Importing necessary modules and components
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale } from 'chart.js';
 import { Radar, Bar } from 'react-chartjs-2';
-import '../Styles/global.css';
-import MatchCard from '../components/MatchCard';
 import Footer from '../components/Footer';
 import './HomePage.css';
 import '../Styles/global.css';
+import MatchCard from '../components/MatchCard';
 import MostGoals from '../components/MostGoals';
 import TopCard from '../components/TopCard';
 import BottomCard from '../components/BottomCard';
+import Typography from '@mui/material/Typography';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale);
 
 console.log('HomePage: Hello there');
 
-// Defining the HomePage component
 const HomePage = () => {
-  // Logging to the console that the component has been rendered
   console.log('HomePage component rendered');
   console.log('HomePage: General Kenobi');
 
@@ -46,10 +43,9 @@ const HomePage = () => {
     },
   ];
 
-  // Returning the JSX to render the component
   return (
     <div className="container">
-      <h1 className="page-title"><b>Recent Matches</b></h1>
+      <Typography variant="h1" className="page-title"><b>Recent Matches</b></Typography>
       <div className="row">
         <div className="col-md-8">
           <div className="row">
@@ -74,5 +70,4 @@ const HomePage = () => {
   );
 };
 
-// Exporting the HomePage component as the default export
 export default HomePage;
