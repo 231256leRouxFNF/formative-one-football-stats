@@ -1,25 +1,29 @@
-// api.js
-import axios from 'axios';
+const API_URL = 'https://api.example.com'; // Replace with your API URL
 
-const API_KEY = 'YOUR_RAPIDAPI_KEY';
-const BASE_URL = 'https://api-football-v1.p.rapidapi.com/v3';
-
-const headers = {
-  'X-RapidAPI-Key': API_KEY,
-  'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+export const fetchRecentMatches = async () => {
+  try {
+    const response = await fetch(`${API_URL}/recent-matches`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch recent matches:', error);
+    return [];
+  }
 };
 
-export const fetchLeagues = async () => {
-  const response = await axios.get(`${BASE_URL}/leagues`, { headers });
-  return response.data.response;
-};
-
-export const fetchTeams = async (leagueId) => {
-  const response = await axios.get(`${BASE_URL}/teams?league=${leagueId}&season=2023`, { headers });
-  return response.data.response;
-};
-
-export const fetchTeamStats = async (teamId, leagueId) => {
-  const response = await axios.get(`${BASE_URL}/teams/statistics?league=${leagueId}&team=${teamId}&season=2023`, { headers });
-  return response.data.response;
+export const fetchMostGoals = async () => {
+  try {
+    const response = await fetch(`${API_URL}/most-goals`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch most goals:', error);
+    return [];
+  }
 };

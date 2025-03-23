@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale } from 'chart.js';
 import { Radar, Bar } from 'react-chartjs-2';
@@ -10,38 +10,28 @@ import MostGoals from '../components/MostGoals';
 import TopCard from '../components/TopCard';
 import BottomCard from '../components/BottomCard';
 import Typography from '@mui/material/Typography';
+import { fetchRecentMatches, fetchMostGoals } from '../api';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement, RadialLinearScale);
 
-console.log('HomePage: Hello there');
-
 const HomePage = () => {
-  console.log('HomePage component rendered');
-  console.log('HomePage: General Kenobi');
+  const [recentMatches, setRecentMatches] = useState([]);
+  const [mostGoals, setMostGoals] = useState([]);
 
-  const recentMatches = [
-    {
-      team1: 'Team A',
-      team2: 'Team B',
-      score1: 2,
-      score2: 1,
-      date: '2025-03-18',
-    },
-    {
-      team1: 'Team C',
-      team2: 'Team D',
-      score1: 0,
-      score2: 3,
-      date: '2025-03-19',
-    },
-    {
-      team1: 'Team E',
-      team2: 'Team F',
-      score1: 1,
-      score2: 1,
-      date: '2025-03-20',
-    },
-  ];
+  useEffect(() => {
+    const getRecentMatches = async () => {
+      const data = await fetchRecentMatches();
+      setRecentMatches(data);
+    };
+
+    const getMostGoals = async () => {
+      const data = await fetchMostGoals();
+      setMostGoals(data);
+    };
+
+    getRecentMatches();
+    getMostGoals();
+  }, []);
 
   return (
     <div className="container">
@@ -57,7 +47,7 @@ const HomePage = () => {
           </div>
           <div className="row mt-4">
             <div className="col-md-12">
-              <MostGoals />
+              <MostGoals data={mostGoals} />
             </div>
           </div>
         </div>
