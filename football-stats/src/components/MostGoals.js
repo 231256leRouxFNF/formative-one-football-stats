@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import './MostGoals.css';
 
-const MostGoals = ({ data }) => {
   return (
     <Box sx={{ width: '100%', margin: '10px auto', height: '500px' }} className="most-goals-card">
       <Card variant="outlined">
@@ -33,6 +32,5 @@ const MostGoals = ({ data }) => {
       </Card>
     </Box>
   );
-};
 
 export default MostGoals;
