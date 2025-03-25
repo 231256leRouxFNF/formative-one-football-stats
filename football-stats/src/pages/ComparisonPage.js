@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { fetchTeams, fetchTeamStats } from '../api';
+import { fetchTeams, fetchTeamStats } from '../services/api'; // Updated import path
 import TeamComparisonCard from '../components/TeamComparisonCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/TeamComparisonCard.css';
