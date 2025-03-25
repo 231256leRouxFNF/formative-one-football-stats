@@ -6,12 +6,16 @@ import ComparisonPage from './pages/ComparisonPage';
 import TimelinePage from './pages/TimelinePage';
 import Footer from './components/Footer';  // Remove this line if duplicate
 import './Styles/global.css'; // Import the global CSS file
+import TeamAttributes from './components/TeamAttributes';
 
 console.log('App.js loaded');
 
 // App component
 export default function App() {
   console.log('App component rendered');
+  const teamName = 'Team A';
+  const attributes = [65, 59, 90, 81, 56];
+
   return (
     <Router>
         <CustomNavbar />
@@ -25,4 +29,6 @@ export default function App() {
         <Footer />
     </Router>
   );
-}
+};
+
+// export default App; // Remove this line if duplicate

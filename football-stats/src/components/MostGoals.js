@@ -1,36 +1,68 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import './MostGoals.css';
+import { getStandings } from '../services/api';
+
+export default function MostGoals() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadStandingsData = async () => {
+      try {
+        const standingsData = await getStandings();
+        console.log('Fetched standings data:', standingsData); // Log the fetched data
+        setData(standingsData);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadStandingsData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-    <Box sx={{ width: '100%', margin: '10px auto', height: '500px' }} className="most-goals-card">
+    <Box sx={{ width: '100%', margin: '10px auto', paddingLeft: '20px' }}>
       <Card variant="outlined">
-        <CardContent className="most-goals-card-content">
+        <CardContent>
           <Typography variant="h6" gutterBottom>
-            Most Goals by Players
+            Team Comparison (Points/Goals)
           </Typography>
-          <div className="most-goals-chart">
-            <BarChart
-              width={400}
-              height={300}
-              data={data}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="goals" name="Goals" fill="#1976d2" />
-            </BarChart>
-          </div>
+          <BarChart
+            width={800}
+            height={400}
+            data={data}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar 
+              dataKey="points" 
+              name="Points" 
+              fill="#1976d2" // Using MUI primary color
+            />
+            <Bar 
+              dataKey="goals" 
+              name="Goals" 
+              fill="#82ca9d" // Using a different color for goals
+            />
+          </BarChart>
         </CardContent>
       </Card>
     </Box>
   );
 
-export default MostGoals;
+}
