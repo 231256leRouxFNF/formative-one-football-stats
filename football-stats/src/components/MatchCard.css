@@ -2,8 +2,77 @@
   min-width: 200px;
   max-width: 300px;
   margin: 10px;
+  margin-bottom: 20px;
 }
 
 .match-card-content {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.match-card {
+  margin: 1rem;
+  transition: transform 0.2s;
+}
+
+.match-card:hover {
+  transform: translateY(-5px);
+}
+
+.match-card-content {
+  text-align: center;
+  padding: 1.5rem !important;
+}
+
+.teams {
+  margin: 1rem 0;
+  min-height: 4rem;
+}
+
+.team-name {
+  display: block;
+  font-weight: 600;
+}
+
+.vs-separator {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.score-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.score {
+  font-weight: 700;
+  color: #1976d2;
+}
+
+.match-date {
+  display: block;
+  color: #666;
+}
+
+.match-status {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.team-logos {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.team-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
 }

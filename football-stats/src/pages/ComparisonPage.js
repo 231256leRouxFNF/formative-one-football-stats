@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { fetchLeagues, fetchTeams, fetchTeamStats } from '../api';
+import { fetchTeams, fetchTeamStats } from '../api';
 import TeamComparisonCard from '../components/TeamComparisonCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/TeamComparisonCard.css';
@@ -10,56 +10,38 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const ComparisonPage = () => {
-  const [leagues, setLeagues] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [selectedLeague, setSelectedLeague] = useState(null);
   const [team1, setTeam1] = useState(null);
   const [team2, setTeam2] = useState(null);
   const [stats1, setStats1] = useState(null);
   const [stats2, setStats2] = useState(null);
   const [error, setError] = useState(null);
 
-  // Load leagues on mount
+  const premierLeagueId = 39; // Premier League ID
+
+  // Load teams on mount
   useEffect(() => {
-    const loadLeagues = async () => {
+    const loadTeams = async () => {
       try {
-        const data = await fetchLeagues();
-        setLeagues(data.map(league => ({
-          value: league.league.id,
-          label: league.league.name
+        const data = await fetchTeams(premierLeagueId);
+        setTeams(data.map(team => ({
+          value: team.team.id,
+          label: team.team.name,
+          logo: team.team.logo
         })));
       } catch (err) {
         setError(err.message);
       }
     };
-    loadLeagues();
-  }, []);
-
-  // Load teams when league is selected
-  useEffect(() => {
-    const loadTeams = async () => {
-      if (selectedLeague) {
-        try {
-          const data = await fetchTeams(selectedLeague.value);
-          setTeams(data.map(team => ({
-            value: team.team.id,
-            label: team.team.name,
-            logo: team.team.logo
-          })));
-        } catch (err) {
-          setError(err.message);
-        }
-      }
-    };
     loadTeams();
-  }, [selectedLeague]);
+  }, []);
 
   // Handle team selection
   const handleTeamSelect = async (team, setTeam, setStats) => {
     setTeam(team);
-    if (selectedLeague && team) {
+    if (team) {
       try {
-        const stats = await fetchTeamStats(team.value, selectedLeague.value);
+        const stats = await fetchTeamStats(team.value, premierLeagueId);
         setStats(stats);
       } catch (err) {
         setError(err.message);
@@ -104,14 +86,6 @@ const ComparisonPage = () => {
     <div className="comparison-page">
       <h1 className="page-title">Team Comparison</h1>
       {error && <div className="error-message">{error}</div>}
-      <div className="league-selector">
-        <Select
-          options={leagues}
-          onChange={setSelectedLeague}
-          placeholder="Select League"
-          className="league-dropdown"
-        />
-      </div>
 
       <div className="comparison-container">
         {/* Team 1 Section */}
@@ -181,7 +155,5 @@ const ComparisonPage = () => {
     </div>
   );
 };
-
-console.log('ComparisonPage: ANAKIN: Dont make me kill.');
 
 export default ComparisonPage;

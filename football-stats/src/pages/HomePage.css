@@ -1,0 +1,145 @@
+.container {
+    padding: 20px;
+  }
+  
+  .home-container {
+    padding: 20px;
+  }
+
+  .page-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .col-md-4 {
+    padding: 10px;
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+
+  .col-md-8 {
+    padding: 10px;
+    flex: 0 0 66.6667%;
+    max-width: 66.6667%;
+  }
+  
+  .match-card {
+    margin-bottom: 10px; /* Reduced margin */
+    flex: 1 1 calc(33.333% - 20px);
+    box-sizing: border-box;
+  }
+  
+  .most-goals-card {
+    height: 500px; /* Adjust height as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    margin-bottom: 20px; /* Add some space below the card */
+  }
+  
+  .most-goals-chart {
+    display: flex;
+    justify-content: center; /* Center chart horizontally */
+  }
+  
+  .top-card {
+    height: 400px; /* Adjust height as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    margin-bottom: 20px; /* Add some space below the card */
+  }
+  
+  .top-card-content {
+    padding: 20px;
+  }
+  
+  .top-card-chart {
+    display: flex;
+    justify-content: center; /* Center chart horizontally */
+  }
+  
+  .bottom-card {
+    height: 400px; /* Adjust height as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    margin-bottom: 20px; /* Add some space below the card */
+  }
+  
+  .bottom-card-content {
+    padding: 20px;
+  }
+  
+  .bottom-card-image {
+    width: 100%;
+  }
+  
+  .bottom-card-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center text vertically */
+  }
+
+  .matches-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  .matches-grid .col-md-4 {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+    height: 100%;
+    padding: 10px;
+  }
+
+  .mt-4 {
+    margin-top: 1.5rem;
+  }
+
+  .loading-spinner, .error-message {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    padding-right: 20px; /* Add padding to the right */
+    padding-left: 200px !important;
+  }
+
+  .most-goals {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    /* width: 600px; */
+    padding-right: 500p;
+  }
+
+  /* .MuiCardContent-root {
+    padding-left: 200px;
+    padding-bottom: 100px;
+  } */
+
+  .team-attributes {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .top-scorer {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
+
