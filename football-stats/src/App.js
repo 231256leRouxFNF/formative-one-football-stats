@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CustomNavbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ComparisonPage from './pages/ComparisonPage';
-import TimelinePage from './pages/TimelinePage';
+import TimelinePage from './pages/InjuryTimeline';
 import Footer from './components/Footer';  // Remove this line if duplicate
 import './Styles/global.css'; // Import the global CSS file
 import TeamAttributes from './components/TeamAttributes';

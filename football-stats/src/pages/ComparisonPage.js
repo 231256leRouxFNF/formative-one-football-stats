@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { fetchTeams, fetchTeamStats } from '../services/api';
+import { fetchTeams } from '../services/api';
+import { fetchPlayerStats } from '../services/api';
 import TeamComparisonCard from '../components/TeamComparisonCard';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../components/TeamComparisonCard.css';
@@ -13,11 +14,15 @@ const ComparisonPage = () => {
   const [teams, setTeams] = useState([]);
   const [team1, setTeam1] = useState(null);
   const [team2, setTeam2] = useState(null);
-  const [stats1, setStats1] = useState(null);
-  const [stats2, setStats2] = useState(null);
+  const [playerStats1, setPlayerStats1] = useState(null);
+  const [playerStats2, setPlayerStats2] = useState(null);
+  const [loadingTeams, setLoadingTeams] = useState(true);
+  const [loadingStats1, setLoadingStats1] = useState(false);
+  const [loadingStats2, setLoadingStats2] = useState(false);
   const [error, setError] = useState(null);
 
   const premierLeagueId = 39; // Premier League ID
+  const fixtureId = '215662'; // Example fixture ID
 
   // Load teams on mount
   useEffect(() => {
@@ -31,91 +36,56 @@ const ComparisonPage = () => {
         })));
       } catch (err) {
         setError(err.message);
+      } finally {
+        setLoadingTeams(false);
       }
     };
     loadTeams();
   }, []);
 
   // Handle team selection
-  const handleTeamSelect = async (team, setTeam, setStats) => {
+  const handleTeamSelect = async (team, setTeam, setPlayerStats, setLoadingStats) => {
     setTeam(team);
     if (team) {
+      setLoadingStats(true);
       try {
-        const stats = await fetchTeamStats(team.value, premierLeagueId);
-        setStats(stats);
+        const stats = await fetchPlayerStats(fixtureId, team.value);
+        setPlayerStats(stats);
       } catch (err) {
         setError(err.message);
+      } finally {
+        setLoadingStats(false);
       }
     }
   };
 
-  // Static data for initial display
-  const teamA = {
-    name: 'Team A',
-    wins: 10,
-    losses: 5,
-    draws: 3,
-    goalsScored: 25,
-    goalsConceded: 15,
-  };
-
-  const teamB = {
-    name: 'Team B',
-    wins: 8,
-    losses: 7,
-    draws: 3,
-    goalsScored: 20,
-    goalsConceded: 18,
-  };
-
-  // Chart options to move the legend below the chart and place legends next to each other
-  const chartOptions = {
-    plugins: {
-      legend: {
-        position: 'bottom', // Move the legend to the bottom
-        align: 'start', // Align legends next to each other
-        labels: {
-          boxWidth: 20,
-          padding: 10,
-        },
-      },
-    },
-  };
-
   return (
     <div className="comparison-page">
-      <h1 className="page-title">Team Comparison</h1>
+      <h1 className="page-title">Player Comparison</h1>
       {error && <div className="error-message">{error}</div>}
 
       <div className="comparison-container">
         {/* Team 1 Section */}
         <div className="team-card">
           <div className="team-header">
-            <Select
-              options={teams}
-              onChange={(team) => handleTeamSelect(team, setTeam1, setStats1)}
-              placeholder="Select Team 1"
-              className="team-select"
-            />
+            {loadingTeams ? (
+              <div>Loading teams...</div>
+            ) : (
+              <Select
+                options={teams}
+                onChange={(team) => handleTeamSelect(team, setTeam1, setPlayerStats1, setLoadingStats1)}
+                placeholder="Select Team 1"
+                className="team-select"
+              />
+            )}
           </div>
           
-          {stats1 ? (
-            <div className="team-stats">
-              <div className="stat-item">
-                <span className="stat-label">Goals</span>
-                <span className="stat-value">{stats1.goals.for.total.total}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">Won</span>
-                <span className="stat-value">{stats1.fixtures.wins.total}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">Lost</span>
-                <span className="stat-value">{stats1.fixtures.loses.total}</span>
-              </div>
-            </div>
+          {loadingStats1 ? (
+            <div>Loading player statistics...</div>
+          ) : playerStats1 ? (
+            <TeamComparisonCard playerStats={playerStats1} />
           ) : (
-            <TeamComparisonCard team={teamA} chartOptions={chartOptions} />
+            <div>Select a team to view player statistics</div>
           )}
         </div>
 
@@ -124,31 +94,24 @@ const ComparisonPage = () => {
         {/* Team 2 Section */}
         <div className="team-card">
           <div className="team-header">
-            <Select
-              options={teams}
-              onChange={(team) => handleTeamSelect(team, setTeam2, setStats2)}
-              placeholder="Select Team 2"
-              className="team-select"
-            />
+            {loadingTeams ? (
+              <div>Loading teams...</div>
+            ) : (
+              <Select
+                options={teams}
+                onChange={(team) => handleTeamSelect(team, setTeam2, setPlayerStats2, setLoadingStats2)}
+                placeholder="Select Team 2"
+                className="team-select"
+              />
+            )}
           </div>
 
-          {stats2 ? (
-            <div className="team-stats">
-              <div className="stat-item">
-                <span className="stat-label">Goals</span>
-                <span className="stat-value">{stats2.goals.for.total.total}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">Won</span>
-                <span className="stat-value">{stats2.fixtures.wins.total}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-label">Lost</span>
-                <span className="stat-value">{stats2.fixtures.loses.total}</span>
-              </div>
-            </div>
+          {loadingStats2 ? (
+            <div>Loading player statistics...</div>
+          ) : playerStats2 ? (
+            <TeamComparisonCard playerStats={playerStats2} />
           ) : (
-            <TeamComparisonCard team={teamB} chartOptions={chartOptions} />
+            <div>Select a team to view player statistics</div>
           )}
         </div>
       </div>

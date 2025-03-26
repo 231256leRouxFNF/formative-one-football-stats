@@ -4,16 +4,13 @@ const API_HOST = 'api-football-v1.p.rapidapi.com';
 const BASE_URL = 'https://api-football-v1.p.rapidapi.com/v3';
 
 const headers = {
-  'X-RapidAPI-Key': '4b9b1c34d0msh93dcd20b236efbcp13f3e2jsn8ced65aa9dba',
+  'X-RapidAPI-Key': '1456145a0bmshc6a19f59662428fp10c532jsnbf332171c64b',
   'X-RapidAPI-Host': API_HOST
 };
 
 const api = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    'X-RapidAPI-Key': '4b9b1c34d0msh93dcd20b236efbcp13f3e2jsn8ced65aa9dba',
-    'X-RapidAPI-Host': API_HOST,
-  },
+  headers,
 });
 
 export const fetchTeams = async () => {
@@ -201,5 +198,40 @@ export const getTopScorer = async (season = '2023') => {
     throw error;
   }
 };
+
+export const fetchPlayers = async () => {
+  const response = await api.get('/players?league=39&season=2023');
+  return response.data.response;
+};
+
+export const fetchPlayerMarketValues = async (playerId, season) => {
+  const response = await api.get(`/players?id=${playerId}&season=${season}`);
+  return response.data.response;
+};
+
+const fetchPlayerStats = async (fixtureId, teamId) => {
+  const options = {
+    method: 'GET',
+    url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures/statistics',
+    params: {
+      fixture: fixtureId,
+      team: teamId
+    },
+    headers: {
+      'x-rapidapi-key': '1456145a0bmshc6a19f59662428fp10c532jsnbf332171c64b',
+      'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+    }
+  };
+
+  try {
+    const response = await axios.request(options);
+    return response.data.response;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export { fetchPlayerStats };
 
 export default api;
