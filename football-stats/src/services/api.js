@@ -8,32 +8,30 @@ const headers = {
   'X-RapidAPI-Host': API_HOST
 };
 
-const RAPIDAPI_KEY = '4b9b1c34d0msh93dcd20b236efbcp13f3e2jsn8ced65aa9dba'; // Replace with your actual RapidAPI key
-const RAPIDAPI_HOST = 'api-football-v1.p.rapidapi.com';
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'X-RapidAPI-Key': '4b9b1c34d0msh93dcd20b236efbcp13f3e2jsn8ced65aa9dba',
+    'X-RapidAPI-Host': API_HOST,
+  },
+});
 
-export const fetchTeams = async (leagueId) => {
-  const response = await fetch(`https://${RAPIDAPI_HOST}/v3/teams?league=${leagueId}&season=2023`, {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': RAPIDAPI_KEY,
-      'X-RapidAPI-Host': RAPIDAPI_HOST,
-    },
-  });
+export const fetchTeams = async () => {
+  const response = await api.get('/teams?league=39&season=2023');
+  return response.data.response;
+};
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch teams');
-  }
-
-  const data = await response.json();
-  return data.response;
+export const fetchTeamFixtures = async (teamId, season) => {
+  const response = await api.get(`/fixtures?team=${teamId}&season=${season}`);
+  return response.data.response;
 };
 
 export const fetchTeamStats = async (teamId, leagueId) => {
-  const response = await fetch(`https://${RAPIDAPI_HOST}/v3/teams/statistics?team=${teamId}&league=${leagueId}&season=2023`, {
+  const response = await fetch(`https://${API_HOST}/v3/teams/statistics?team=${teamId}&league=${leagueId}&season=2023`, {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': RAPIDAPI_KEY,
-      'X-RapidAPI-Host': RAPIDAPI_HOST,
+      'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
+      'X-RapidAPI-Host': API_HOST,
     },
   });
 
@@ -54,7 +52,7 @@ export const getRecentMatches = async (options = {}) => {
       ...options
     };
 
-    const response = await axios.get(`${BASE_URL}/fixtures`, { headers, params });
+    const response = await api.get('/fixtures', { params });
     const data = response.data;
 
     console.log('Fetched matches data:', data.response); // Log the fetched data
@@ -84,7 +82,7 @@ export const getTeamStatistics = async (teamId, options = {}) => {
       ...options
     });
 
-    const response = await axios.get(`${BASE_URL}/teams/statistics`, { headers, params });
+    const response = await api.get('/teams/statistics', { params });
     if (response.status !== 200) throw new Error('Team stats request failed');
     const data = response.data;
 
@@ -129,8 +127,7 @@ const transformTeamStats = (stats) => {
 export const getGoalsPerLeague = async (season = '2023') => {
   try {
     const leagueId = 39; // Premier League ID
-    const response = await axios.get(`${BASE_URL}/teams/statistics`, {
-      headers,
+    const response = await api.get('/teams/statistics', {
       params: { league: leagueId, season }
     });
     const stats = response.data.response;
@@ -155,8 +152,7 @@ export const getGoalsPerLeague = async (season = '2023') => {
 export const getStandings = async (season = '2023') => {
   try {
     const leagueId = 39; // Premier League ID
-    const response = await axios.get(`${BASE_URL}/standings`, {
-      headers,
+    const response = await api.get('/standings', {
       params: { league: leagueId, season }
     });
     const standings = response.data.response[0].league.standings[0];
@@ -182,8 +178,7 @@ export const getStandings = async (season = '2023') => {
 export const getTopScorer = async (season = '2023') => {
   try {
     const leagueId = 39; // Premier League ID
-    const response = await axios.get(`${BASE_URL}/players/topscorers`, {
-      headers,
+    const response = await api.get('/players/topscorers', {
       params: { league: leagueId, season }
     });
     const topScorer = response.data.response[0];
@@ -206,3 +201,5 @@ export const getTopScorer = async (season = '2023') => {
     throw error;
   }
 };
+
+export default api;
