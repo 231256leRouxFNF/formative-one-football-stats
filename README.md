@@ -1,4 +1,4 @@
-![Logo](football-stats\src\imgs\Logo.svg)
+![Logo](football-stats/src/imgs/Logo.svg)
 
 # Football Stats
 
@@ -76,20 +76,20 @@ And Finally
 
 ## The Different Pages
 
-#### The Dashboard page 
+#### The Home page 
 Displays recent matches and the top scorer in the league. Users can explore match details and view the top-performing player.
 
-![App Screenshot] (football-stats\screenshots\Home.jpg)
+![App Screenshot](screenshots/Home.jpg)
 
 #### The Comparison page 
 Allows users to compare two players' statistics side by side. Includes bar charts, radar charts, and pie charts for visual comparisons.
 
-![App Screenshot] (football-stats\screenshots\Comparison.jpg)
+![App Screenshot](screenshots/Comparison.jpg)
 
 #### The Timeline page 
 Visualizes injury data over time using a line chart. Users can explore trends in injuries for specific leagues and seasons.
 
-![App Screenshot] (football-stats\screenshots\Timeline.jpg)
+![App Screenshot](screenshots/Timeline.jpg)
 
 ## Features
 
