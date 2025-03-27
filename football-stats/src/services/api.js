@@ -4,6 +4,11 @@ import axiosRateLimit from 'axios-rate-limit';
 const API_HOST = 'api-football-v1.p.rapidapi.com';
 const BASE_URL = 'https://api-football-v1.p.rapidapi.com/v3';
 
+const headers = {
+  'x-rapidapi-key': process.env.REACT_APP_RAPIDAPI_KEY || 'your_api_key_here',
+  'x-rapidapi-host': API_HOST,
+};
+
 // Create rate-limited API instance (1 request per 1.5 seconds)
 const api = axiosRateLimit(
   axios.create({
@@ -193,6 +198,37 @@ export const fetchInjuryData = async (seasonStartDate, seasonEndDate, leagueId =
   }
 
   return results;
+};
+
+// Fetch player data
+export const fetchPlayerData = async (playerId, season) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/players`, {
+      params: { id: playerId, season },
+      headers,
+    });
+    return response.data.response[0]; // Return the first player in the response
+  } catch (error) {
+    console.error(`Error fetching player data for ID ${playerId}:`, error);
+    throw error;
+  }
+};
+
+// Fetch injuries
+export const fetchInjuries = async (leagueId, season) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/injuries`, {
+      headers,
+      params: {
+        league: leagueId,
+        season,
+      },
+    });
+    return response.data.response; // Return the injuries data
+  } catch (error) {
+    console.error('Error fetching injuries:', error);
+    throw error;
+  }
 };
 
 export default api;

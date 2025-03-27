@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import { fetchPlayerData } from '../services/api'; // Import the function
 import { Chart } from 'chart.js/auto';
 import './ComparisonCard.css';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -31,21 +31,6 @@ const ComparisonPage = () => {
     fetchPlayers();
   }, []);
 
-  const fetchPlayerData = async (playerId, season) => {
-    const options = {
-      method: 'GET',
-      url: 'https://api-football-v1.p.rapidapi.com/v3/players',
-      params: { id: playerId, season },
-      headers: {
-        'x-rapidapi-key': '4b9b1c34d0msh93dcd20b236efbcp13f3e2jsn8ced65aa9dba',
-        'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
-      }
-    };
-
-    const response = await axios.request(options);
-    return response.data.response[0];
-  };
-
   useEffect(() => {
     if (!isLoading && players.player1 && players.player2) {
       const stats1 = getStats(players.player1);
@@ -66,149 +51,101 @@ const ComparisonPage = () => {
   }, [isLoading, players]);
 
   const getStats = (player) => ({
-    goals: player.statistics[0].goals.total,
-    passes: player.statistics[0].passes.total,
-    tackles: player.statistics[0].tackles.total,
-    dribbles: player.statistics[0].dribbles.success,
-  });
-
-// Updated chart creation functions with improved readability options
-const createBarChart = (stats1, stats2) => {
-  barChartRef.current.chartInstance = new Chart(barChartRef.current, {
-    type: 'bar',
-    data: {
-      labels: ['Goals', 'Passes', 'Tackles', 'Dribbles'],
-      datasets: [
-        {
-          label: players.player1.player.name,
-          data: Object.values(stats1),
-          backgroundColor: 'rgba(54, 162, 235, 0.8)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1,
-          barThickness: 40,
-        },
-        {
-          label: players.player2.player.name,
-          data: Object.values(stats2),
-          backgroundColor: 'rgba(255, 99, 132, 0.8)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1,
-          barThickness: 40,
-        }
-      ]
+    // Bar Chart Stats (Core Skills)
+    barStats: {
+      goals: player.statistics[0].goals.total || 0,
+      passes: player.statistics[0].passes.total || 0,
+      tackles: player.statistics[0].tackles.total || 0,
+      dribbles: player.statistics[0].dribbles.success || 0,
     },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: '#34495e',
-            font: {
-              size: 14
-            }
-          },
-          grid: {
-            color: 'rgba(0, 0, 0, 0.05)'
-          }
-        },
-        x: {
-          ticks: {
-            color: '#34495e',
-            font: {
-              size: 14
-            }
-          }
-        }
-      },
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: {
-            font: {
-              size: 14
-            }
-          }
-        },
-        datalabels: {
-          anchor: 'end',
-          align: 'top',
-          color: '#34495e',
-          font: {
-            size: 12,
-            weight: 'bold'
-          }
-        }
-      }
+    // Radar Chart Stats (Advanced Metrics)
+    radarStats: {
+      shotsOnTarget: player.statistics[0].shots.on || 0,
+      foulsCommitted: player.statistics[0].fouls.committed || 0,
+      penaltiesScored: player.statistics[0].penalty.scored || 0,
+      interceptions: player.statistics[0].interceptions || 0,
+      duelsWon: player.statistics[0].duels.won || 0,
     }
   });
-};
-
-const createRadarChart = (stats1, stats2) => {
-  radarChartRef.current.chartInstance = new Chart(radarChartRef.current, {
-    type: 'radar',
-    data: {
-      labels: ['Goals', 'Assists', 'Passes', 'Tackles', 'Dribbles'],
-      datasets: [
-        {
-          label: players.player1.player.name,
-          data: Object.values(stats1),
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 0.8)',
-          borderWidth: 2,
-          pointRadius: 4,
-          pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-        },
-        {
-          label: players.player2.player.name,
-          data: Object.values(stats2),
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 0.8)',
-          borderWidth: 2,
-          pointRadius: 4,
-          pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        r: {
-          beginAtZero: true,
-          ticks: {
-            color: '#34495e',
-            backdropColor: 'transparent',
-            font: {
-              size: 12
-            }
+  
+  const createBarChart = (stats1, stats2) => {
+    barChartRef.current.chartInstance = new Chart(barChartRef.current, {
+      type: 'bar',
+      data: {
+        labels: ['Goals', 'Passes', 'Tackles', 'Dribbles'],
+        datasets: [
+          {
+            label: players.player1.player.name,
+            data: Object.values(stats1.barStats),
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
           },
-          grid: {
-            color: 'rgba(0, 0, 0, 0.1)'
-          },
-          pointLabels: {
-            color: '#34495e',
-            font: {
-              size: 14
-            }
+          {
+            label: players.player2.player.name,
+            data: Object.values(stats2.barStats),
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
           }
-        }
+        ]
       },
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: {
-            font: {
-              size: 14
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
             }
           }
         }
       }
-    }
-  });
-};
-
+    });
+  };
+  
+  const createRadarChart = (stats1, stats2) => {
+    radarChartRef.current.chartInstance = new Chart(radarChartRef.current, {
+      type: 'radar',
+      data: {
+        labels: ['Shots on Target', 'Fouls Committed', 'Penalties Scored', 'Interceptions', 'Duels Won'],
+        datasets: [
+          {
+            label: players.player1.player.name,
+            data: Object.values(stats1.radarStats),
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 0.8)',
+            borderWidth: 2,
+          },
+          {
+            label: players.player2.player.name,
+            data: Object.values(stats2.radarStats),
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 0.8)',
+            borderWidth: 2,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true,
+            ticks: { display: false }, // Cleaner look
+            pointLabels: {
+              font: {
+                size: 13,
+                family: 'Arial, sans-serif'
+              }
+            }
+          }
+        }
+      }
+    });
+  };
+  
   const createPieChart = (stats1, stats2) => {
     pieChartRef.current.chartInstance = new Chart(pieChartRef.current, {
       type: 'pie',
@@ -216,14 +153,18 @@ const createRadarChart = (stats1, stats2) => {
         labels: [players.player1.player.name, players.player2.player.name],
         datasets: [
           {
-            data: [stats1.goals, stats2.goals],
+            data: [stats1.barStats.goals, stats2.barStats.goals],
             backgroundColor: ['#36a2eb', '#ff6384'],
           },
         ],
       },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
     });
   };
-
+ 
   return (
     <div className="comparison-container">
       {isLoading ? (
