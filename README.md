@@ -1,4 +1,4 @@
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\football-stats\src\imgs\Logo.svg)
 
 # Football Stats
 
@@ -56,10 +56,13 @@ In your terminal run the following
   npm install react-router-dom
 ```
 ```bash
-  npm install chart.js react-chartjs-2 react
+npm install chart.js react react-chartjs-2 react-dom react-vertical-timeline-component
 ```
 ```bash
-  npm install axios
+npm install --save-dev @babel/core @babel/preset-env @babel/preset-react
+```
+```bash
+npm install @emotion/react @emotion/styled @mui/icons-material @mui/material axios axios-rate-limit bootstrap chart.js chartjs-plugin-datalabels prop-types react react-bootstrap react-chartjs-2 react-dom react-router-dom react-scripts react-select react-timeline react-vertical-timeline-component recharts web-vitals
 ```
 ```bash
   cd football-stats
@@ -72,20 +75,21 @@ And Finally
 
 
 ## The Different Pages
+
 #### The Dashboard page 
 Displays recent matches and the top scorer in the league. Users can explore match details and view the top-performing player.
 
-![App Screenshot]
+![App Screenshot] (C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\screenshots\Home.jpg)
 
 #### The Comparison page 
 Allows users to compare two players' statistics side by side. Includes bar charts, radar charts, and pie charts for visual comparisons.
 
-![App Screenshot]
+![App Screenshot] (C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\screenshots\Comparison.jpg)
 
 #### The Timeline page 
 Visualizes injury data over time using a line chart. Users can explore trends in injuries for specific leagues and seasons.
 
-![App Screenshot]
+![App Screenshot] (C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\screenshots\Timeline.jpg)
 
 ## Features
 
@@ -96,14 +100,11 @@ Visualizes injury data over time using a line chart. Users can explore trends in
 - Responsive design for mobile and desktop devices.
 
 ## Here is the Demo showing how the application works.
+these can also be found in the admin folder found in the root directory
 
-[App Demo link]
+[App Demo link] (https://drive.google.com/file/d/1roZv1GlmarXf554RxYNeT7f_iF3-lpfQ/view?usp=drive_link)
 
-### Home page
-
-### Comparison Page
-
-### Timeline Page
+[Walkthough video] (https://drive.google.com/file/d/1xr9kg2m_Cq2sZIEegsv7aC9LOoZUwkC6/view?usp=drive_link)
 
 ## Acknowledgements
 
@@ -116,8 +117,7 @@ Jolpica. (n.d.). Jolpica F1 API. https://api.jolpi.ca/ergast/?format=api
 
 Found on RapidAPI at: https://rapidapi.com/
 
-API Reference
-### API Reference
+## API Endpoints used
 
 #### Fetch all teams
 | Parameter | Type   | Description         |
