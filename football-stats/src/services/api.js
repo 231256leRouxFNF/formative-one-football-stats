@@ -1,237 +1,198 @@
 import axios from 'axios';
+import axiosRateLimit from 'axios-rate-limit';
 
 const API_HOST = 'api-football-v1.p.rapidapi.com';
 const BASE_URL = 'https://api-football-v1.p.rapidapi.com/v3';
 
-const headers = {
-  'X-RapidAPI-Key': '1456145a0bmshc6a19f59662428fp10c532jsnbf332171c64b',
-  'X-RapidAPI-Host': API_HOST
-};
-
-const api = axios.create({
-  baseURL: BASE_URL,
-  headers,
-});
-
-export const fetchTeams = async () => {
-  const response = await api.get('/teams?league=39&season=2023');
-  return response.data.response;
-};
-
-export const fetchTeamFixtures = async (teamId, season) => {
-  const response = await api.get(`/fixtures?team=${teamId}&season=${season}`);
-  return response.data.response;
-};
-
-export const fetchTeamStats = async (teamId, leagueId) => {
-  const response = await fetch(`https://${API_HOST}/v3/teams/statistics?team=${teamId}&league=${leagueId}&season=2023`, {
-    method: 'GET',
+// Create rate-limited API instance (1 request per 1.5 seconds)
+const api = axiosRateLimit(
+  axios.create({
+    baseURL: BASE_URL,
     headers: {
       'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
       'X-RapidAPI-Host': API_HOST,
     },
-  });
+  }),
+  { maxRequests: 1, perMilliseconds: 1500 }
+);
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch team stats');
+// Add retry interceptor with exponential backoff
+api.interceptors.response.use(null, async (error) => {
+  const config = error.config;
+  if (!config || error.response?.status !== 429) return Promise.reject(error);
+
+  config.__retryCount = config.__retryCount || 0;
+  const maxRetries = config.retry || 3;
+
+  if (config.__retryCount >= maxRetries) {
+    return Promise.reject(error);
   }
 
-  const data = await response.json();
-  return data.response;
+  config.__retryCount += 1;
+  const delay = Math.pow(2, config.__retryCount) * 1000;
+  await new Promise((resolve) => setTimeout(resolve, delay));
+
+  return api(config);
+});
+
+// Unified API request handler
+const handleRequest = async (endpoint, params = {}, retry = 3) => {
+  try {
+    const response = await api.get(endpoint, {
+      params,
+      retry,
+    });
+    return response.data.response;
+  } catch (error) {
+    console.error(`API Error in ${endpoint}:`, error.message);
+    throw error;
+  }
+};
+
+// API functions
+export const fetchTeams = async () => {
+  return handleRequest('/teams', { league: 39, season: 2023 });
+};
+
+export const fetchTeamFixtures = async (teamId, season) => {
+  return handleRequest('/fixtures', { team: teamId, season });
+};
+
+export const fetchTeamStats = async (teamId, leagueId) => {
+  return handleRequest('/teams/statistics', {
+    team: teamId,
+    league: leagueId,
+    season: 2023,
+  });
 };
 
 export const getRecentMatches = async (options = {}) => {
-  try {
-    const params = {
-      league: '39',      // Premier League
-      season: '2023',
-      last: '3',        // Last 10 matches
-      ...options
-    };
+  const params = {
+    league: '39',
+    season: '2023',
+    last: '3',
+    ...options,
+  };
 
-    const response = await api.get('/fixtures', { params });
-    const data = response.data;
-
-    console.log('Fetched matches data:', data.response); // Log the fetched data
-
-    return data.response.map(match => ({
-      team1: match.teams.home.name,
-      team2: match.teams.away.name,
-      score1: match.goals.home,
-      score2: match.goals.away,
-      date: new Date(match.fixture.date).toLocaleDateString(),
-      team1Logo: match.teams.home.logo,
-      team2Logo: match.teams.away.logo,
-      status: match.fixture.status.short
-    }));
-  } catch (error) {
-    console.error('API Error:', error.response ? error.response.data : error.message);
-    throw error;
-  }
+  const matches = await handleRequest('/fixtures', params);
+  return matches.map((match) => ({
+    team1: match.teams.home.name,
+    team2: match.teams.away.name,
+    score1: match.goals.home,
+    score2: match.goals.away,
+    date: new Date(match.fixture.date).toLocaleDateString(),
+    team1Logo: match.teams.home.logo,
+    team2Logo: match.teams.away.logo,
+    status: match.fixture.status.short,
+  }));
 };
 
 export const getTeamStatistics = async (teamId, options = {}) => {
-  try {
-    const params = new URLSearchParams({
-      league: '39',
-      season: '2023',
-      team: teamId,
-      ...options
-    });
-
-    const response = await api.get('/teams/statistics', { params });
-    if (response.status !== 200) throw new Error('Team stats request failed');
-    const data = response.data;
-
-    console.log('Raw team stats:', data.response); // Log the raw stats
-
-    return transformTeamStats(data.response);
-  } catch (error) {
-    console.error('Team Stats Error:', error);
-    throw error;
-  }
-};
-
-const transformTeamStats = (stats) => {
-  // Log the raw stats for debugging
-  console.log('Transforming team stats:', stats);
-
-  // Normalize stats to 0-100 scale
-  return {
-    attack: Math.min(100, Math.round(
-      (stats.goals?.for?.total / stats.fixtures?.played?.total) * 15 + // Goals per game
-      (stats.shots?.on?.total / stats.fixtures?.played?.total) * 2    // Shots on target
-    )),
-    defense: Math.min(100, Math.round(
-      100 - (stats.goals?.against?.total / stats.fixtures?.played?.total) * 10 +
-      (stats.clean_sheet?.total / stats.fixtures?.played?.total) * 20
-    )),
-    stamina: Math.min(100, Math.round(
-      (stats.goals?.for?.minute['46-60']?.total + 
-       stats.goals?.for?.minute['76-90']?.total) * 4
-    )),
-    speed: Math.min(100, Math.round(
-      stats.passes?.total / stats.fixtures?.played?.total / 50 + // Passes per game
-      stats.dribbles?.success * 0.5
-    )),
-    skill: Math.min(100, Math.round(
-      stats.passes?.accuracy +
-      stats.dribbles?.success / 2
-    ))
+  const params = {
+    league: '39',
+    season: '2023',
+    team: teamId,
+    ...options
   };
+
+  const stats = await handleRequest('/teams/statistics', params);
+  return transformTeamStats(stats);
 };
+
+const transformTeamStats = (stats) => ({
+  attack: Math.min(100, Math.round(
+    (stats.goals?.for?.total / stats.fixtures?.played?.total) * 15 +
+    (stats.shots?.on?.total / stats.fixtures?.played?.total) * 2
+  )),
+  defense: Math.min(100, Math.round(
+    100 - (stats.goals?.against?.total / stats.fixtures?.played?.total) * 10 +
+    (stats.clean_sheet?.total / stats.fixtures?.played?.total) * 20
+  )),
+  stamina: Math.min(100, Math.round(
+    (stats.goals?.for?.minute['46-60']?.total + 
+     stats.goals?.for?.minute['76-90']?.total) * 4
+  )),
+  speed: Math.min(100, Math.round(
+    stats.passes?.total / stats.fixtures?.played?.total / 50 +
+    stats.dribbles?.success * 0.5
+  )),
+  skill: Math.min(100, Math.round(
+    stats.passes?.accuracy +
+    stats.dribbles?.success / 2
+  ))
+});
 
 export const getGoalsPerLeague = async (season = '2023') => {
-  try {
-    const leagueId = 39; // Premier League ID
-    const response = await api.get('/teams/statistics', {
-      params: { league: leagueId, season }
-    });
-    const stats = response.data.response;
-
-    // Log the stats for debugging
-    console.log(`Stats for Premier League:`, stats);
-
-    const goalsData = stats.map(team => ({
-      name: team.team.name,
-      goals: team.goals.for.total || 0 // Ensure goals is defined
-    }));
-
-    console.log('Goals data:', goalsData); // Log the goals data
-
-    return goalsData;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  const stats = await handleRequest('/teams/statistics', {
+    league: 39,
+    season
+  });
+  return stats.map(team => ({
+    name: team.team.name,
+    goals: team.goals.for.total || 0
+  }));
 };
 
 export const getStandings = async (season = '2023') => {
-  try {
-    const leagueId = 39; // Premier League ID
-    const response = await api.get('/standings', {
-      params: { league: leagueId, season }
-    });
-    const standings = response.data.response[0].league.standings[0];
-
-    // Log the standings for debugging
-    console.log(`Standings for Premier League:`, standings);
-
-    const standingsData = standings.map(team => ({
-      name: team.team.name,
-      points: team.points,
-      goals: team.all.goals.for
-    }));
-
-    console.log('Standings data:', standingsData); // Log the standings data
-
-    return standingsData;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  const standings = await handleRequest('/standings', {
+    league: 39,
+    season,
+  });
+  return standings[0].league.standings[0].map((team) => ({
+    name: team.team.name,
+    points: team.points,
+    goals: team.all.goals.for,
+  }));
 };
 
 export const getTopScorer = async (season = '2023') => {
-  try {
-    const leagueId = 39; // Premier League ID
-    const response = await api.get('/players/topscorers', {
-      params: { league: leagueId, season }
-    });
-    const topScorer = response.data.response[0];
-
-    // Log the top scorer for debugging
-    console.log(`Top Scorer for Premier League:`, topScorer);
-
-    const topScorerData = {
-      player: topScorer.player.name,
-      team: topScorer.statistics[0].team.name,
-      goals: topScorer.statistics[0].goals.total,
-      photo: topScorer.player.photo
-    };
-
-    console.log('Top Scorer data:', topScorerData); // Log the top scorer data
-
-    return topScorerData;
-  } catch (error) {
-    console.error('API Error:', error);
-    throw error;
-  }
+  const topScorer = await handleRequest('/players/topscorers', {
+    league: 39,
+    season,
+  });
+  return {
+    player: topScorer[0].player.name,
+    team: topScorer[0].statistics[0].team.name,
+    goals: topScorer[0].statistics[0].goals.total,
+    photo: topScorer[0].player.photo,
+  };
 };
 
 export const fetchPlayers = async () => {
-  const response = await api.get('/players?league=39&season=2023');
-  return response.data.response;
+  return handleRequest('/players', { league: 39, season: 2023 });
 };
 
-export const fetchPlayerMarketValues = async (playerId, season) => {
-  const response = await api.get(`/players?id=${playerId}&season=${season}`);
-  return response.data.response;
+export const fetchPlayerStats = async (fixtureId, teamId) => {
+  return handleRequest('/fixtures/statistics', {
+    fixture: fixtureId,
+    team: teamId
+  });
 };
 
-const fetchPlayerStats = async (fixtureId, teamId) => {
-  const options = {
-    method: 'GET',
-    url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures/statistics',
-    params: {
-      fixture: fixtureId,
-      team: teamId
-    },
-    headers: {
-      'x-rapidapi-key': '1456145a0bmshc6a19f59662428fp10c532jsnbf332171c64b',
-      'x-rapidapi-host': 'api-football-v1.p.rapidapi.com'
+export const fetchInjuryData = async (seasonStartDate, seasonEndDate, leagueId = 39) => {
+  const getDateRange = (start, end) => {
+    const dates = [];
+    const current = new Date(start);
+    while (current <= new Date(end)) {
+      dates.push(current.toISOString().split('T')[0]);
+      current.setDate(current.getDate() + 1);
     }
+    return dates;
   };
 
-  try {
-    const response = await axios.request(options);
-    return response.data.response;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
+  const dates = getDateRange(seasonStartDate, seasonEndDate);
+  const results = [];
 
-export { fetchPlayerStats };
+  for (const date of dates) {
+    try {
+      const response = await handleRequest('/injuries', { date, league: leagueId });
+      results.push({ date, count: response.length });
+    } catch (err) {
+      results.push({ date, count: 0 });
+    }
+  }
+
+  return results;
+};
 
 export default api;

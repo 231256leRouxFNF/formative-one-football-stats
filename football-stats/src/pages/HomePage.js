@@ -1,7 +1,6 @@
 import React from 'react';
 import MatchCard from '../components/MatchCard';
 import MostGoals from '../components/MostGoals';
-import TeamAttributes from '../components/TeamAttributes';
 import TopScorer from '../components/TopScorer';
 import { useMatches } from '../hooks/useMatches';
 import './HomePage.css';
@@ -31,9 +30,6 @@ const HomePage = () => {
         </div>
         <div className="most-goals">
           <MostGoals />
-        </div>
-        <div className="team-attributes">
-          <TeamAttributes teamId={33} /> {/* Replace 33 with the desired team ID */}
         </div>
         <div className="top-scorer">
           <TopScorer data={dummyTopScorer} />

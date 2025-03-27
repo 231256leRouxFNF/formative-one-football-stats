@@ -6,7 +6,6 @@ import ComparisonPage from './pages/ComparisonPage';
 import TimelinePage from './pages/InjuryTimeline';
 import Footer from './components/Footer';  // Remove this line if duplicate
 import './Styles/global.css'; // Import the global CSS file
-import TeamAttributes from './components/TeamAttributes';
 
 console.log('App.js loaded');
 

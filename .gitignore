@@ -1,5 +1,5 @@
 .qodo
 
 # Ignore ALL node_modules folders, anywhere in the project
-
-# Ignore cache files
+node_modules/
+```
