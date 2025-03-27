@@ -1,6 +1,5 @@
 .qodo
 
 # Ignore ALL node_modules folders, anywhere in the project
-
-# Ignore cache files
-football-stats/node_modules/.cache/.eslintcache
+node_modules/
+```
