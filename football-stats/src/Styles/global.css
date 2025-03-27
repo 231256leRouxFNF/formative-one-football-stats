@@ -1,11 +1,13 @@
 /* Global Styles for Football Dashboard */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #288817 25%, #033c01 75%);
     color: #333;
     margin: 0;
     padding: 0;
 }
+
+
 
 main {
     padding: 20px;
@@ -54,12 +56,34 @@ main {
     background-color: #e6b800; /* Darker Yellow */
 }
 
-.footer {
-    background-color: #004d00; /* Dark Green */
-    color: #ffffff;
-    padding: 10px;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+/* Ensure the app takes up the full height of the viewport */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+/* Content container grows to fill available space */
+.content-container {
+  flex: 1;
+  padding-bottom: 60px; /* Add space for the footer */
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 20px; /* Remove left padding for smaller screens */
+  }
+
+  .grid-container {
+    margin-left: 0; /* Remove left margin for smaller screens */
+    grid-template-columns: 1fr; /* Stack everything in one column */
+  }
+
+  .matches-grid {
+    justify-content: center; /* Center the match cards */
+  }
+
+  .top-scorer {
+    margin-top: 20px; /* Add spacing above the Top Scorer card */
+  }
 }

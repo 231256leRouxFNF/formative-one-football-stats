@@ -2,8 +2,10 @@
     padding: 20px;
   }
   
+  /* Home container styling */
   .home-container {
-    padding: 20px;
+    padding: 20px 20px 20px 150px; /* Add left padding to move content into frame */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
   }
 
   .page-title {
@@ -88,13 +90,12 @@
     justify-content: center; /* Center text vertically */
   }
 
-  .matches-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-  }
+ /* Matches grid styling */
+.matches-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
   .matches-grid .col-md-4 {
     flex: 0 0 33.3333%;
@@ -112,14 +113,20 @@
     margin-top: 20px;
   }
 
-  .grid-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 20px;
-    padding-right: 20px; /* Add padding to the right */
-    padding-left: 200px !important;
-  }
+  /* Match card styling */
+.match-card {
+  flex: 1 1 calc(33.333% - 20px); /* 3 cards per row */
+  box-sizing: border-box;
+}
+
+/* Grid container for matches and top scorer */
+.grid-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr; /* Matches take 3 parts, Top Scorer takes 1 part */
+  gap: 20px;
+  padding: 20px;
+  margin-left: 150px; /* Add left margin to move grid into frame */
+}
 
   .most-goals {
     grid-column: 1 / 2;
@@ -138,7 +145,11 @@
     grid-row: 1 / 2;
   }
 
+  /* Top scorer card styling */
   .top-scorer {
+    display: flex;
+    justify-content: center; /* Center the card horizontally */
+    align-items: flex-start; /* Align the card to the top */
     grid-column: 2 / 3;
     grid-row: 2 / 3;
   }
