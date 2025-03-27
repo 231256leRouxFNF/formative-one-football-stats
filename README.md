@@ -1,4 +1,4 @@
-![Logo](football-stats\football-stats\src\imgs\Logo.svg)
+![Logo](football-stats\src\imgs\Logo.svg)
 
 # Football Stats
 
