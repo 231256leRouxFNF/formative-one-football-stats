@@ -1,4 +1,4 @@
-![Logo](C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\football-stats\src\imgs\Logo.svg)
+![Logo](football-stats\src\imgs\Logo.svg)
 
 # Football Stats
 
@@ -79,17 +79,17 @@ And Finally
 #### The Dashboard page 
 Displays recent matches and the top scorer in the league. Users can explore match details and view the top-performing player.
 
-![App Screenshot] (C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\screenshots\Home.jpg)
+![App Screenshot] (football-stats\screenshots\Home.jpg)
 
 #### The Comparison page 
 Allows users to compare two players' statistics side by side. Includes bar charts, radar charts, and pie charts for visual comparisons.
 
-![App Screenshot] (C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\screenshots\Comparison.jpg)
+![App Screenshot] (football-stats\screenshots\Comparison.jpg)
 
 #### The Timeline page 
 Visualizes injury data over time using a line chart. Users can explore trends in injuries for specific leagues and seasons.
 
-![App Screenshot] (C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\screenshots\Timeline.jpg)
+![App Screenshot] (football-stats\screenshots\Timeline.jpg)
 
 ## Features
 
