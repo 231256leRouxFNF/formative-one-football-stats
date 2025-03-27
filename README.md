@@ -1,4 +1,4 @@
-![Logo](C:\Users\flr21\Desktop\OWI\2025\DV200\S1\due-for-w6\football-stats\football-stats\src\imgs\Logo.svg)
+![Logo](football-stats\football-stats\src\imgs\Logo.svg)
 
 # Football Stats
 
