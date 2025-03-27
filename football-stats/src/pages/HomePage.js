@@ -4,12 +4,7 @@ import MostGoals from '../components/MostGoals';
 import TopScorer from '../components/TopScorer';
 import { useMatches } from '../hooks/useMatches';
 import './HomePage.css';
-
-const dummyTopScorer = {
-  player: 'Player A',
-  goals: 120,
-  team: 'Team A',
-};
+import "../Styles/global.css"; // Import the theme CSS file
 
 const HomePage = () => {
   const { matches, loading, error } = useMatches();
@@ -21,6 +16,7 @@ const HomePage = () => {
     <div className="home-container">
       <h1 className="page-title">Recent Premier League Matches</h1>
       <div className="grid-container">
+        {/* Matches Grid */}
         <div className="matches-grid">
           {matches.map((match, index) => (
             <div key={`match-${index}`} className="match-card">
@@ -28,11 +24,13 @@ const HomePage = () => {
             </div>
           ))}
         </div>
+        {/* Top Scorer Card */}
+        <div className="top-scorer">
+          <TopScorer />
+        </div>
+        {/* Most Goals Card */}
         <div className="most-goals">
           <MostGoals />
-        </div>
-        <div className="top-scorer">
-          <TopScorer data={dummyTopScorer} />
         </div>
       </div>
     </div>

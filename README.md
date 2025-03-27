@@ -1,76 +1,162 @@
-
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
+# Football Stats
 
-# Project Title
+Football Stats is a React web application built using the API-Football API, which provides a variety of data related to football (soccer). This application leverages the API to provide detailed statistics about matches, players, injuries, and comparisons. All these stats are visually represented using charts to provide users with the best insights possible.
 
-A brief description of what this project does and who it's for
-
+---
 
 ## Built With
+
+![React](https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+
+![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+![CSS](https://img.shields.io/badge/-CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+
+![Chart.js](https://img.shields.io/badge/-Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
+
+![Node.js](https://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+
+---
+
 ## Table of Contents
+
+* [Deployment](#deployment)
+* [The Different Pages](#the-different-pages)
+* [Features](#features)
+* [Demo](#demo)
+* [Acknowledgements](#acknowledgements)
+* [API Reference](#api-reference)
+* [License](#license)
+
+---
+
 ## Deployment
 
-To deploy this project run
+To try this web app, follow these steps:
+
+Clone the repository:
+
+To try this webapp follow these steps
+
+Clone The Repo
 
 ```bash
-  npm run deploy
+https://github.com/231256leRouxFNF/formative-one-football-stats.git
+```
+In your terminal run the following
+```bash
+  npm install
+```
+```bash
+  npm install react-bootstrap bootstrap
+```
+```bash
+  npm install react-router-dom
+```
+```bash
+  npm install chart.js react-chartjs-2 react
+```
+```bash
+  npm install axios
+```
+```bash
+  cd football-stats
+```
+And Finally
+
+```bash
+  npm start
 ```
 
 
-## The Different Page
+## The Different Pages
+#### The Dashboard page 
+Displays recent matches and the top scorer in the league. Users can explore match details and view the top-performing player.
+
+![App Screenshot]
+
+#### The Comparison page 
+Allows users to compare two players' statistics side by side. Includes bar charts, radar charts, and pie charts for visual comparisons.
+
+![App Screenshot]
+
+#### The Timeline page 
+Visualizes injury data over time using a line chart. Users can explore trends in injuries for specific leagues and seasons.
+
+![App Screenshot]
+
 ## Features
-## Demo
 
-Insert gif or link to demo
+- View recent football matches and their details.
+- Compare player statistics side by side.
+- Explore injury trends with interactive charts.
+- Discover the top scorer in the league.
+- Responsive design for mobile and desktop devices.
 
+## Here is the Demo showing how the application works.
 
-## FAQ
+[App Demo link]
 
-#### Question 1
+### Home page
 
-Answer 1
+### Comparison Page
 
-#### Question 2
-
-Answer 2
-
+### Timeline Page
 
 ## Acknowledgements
 
- - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
-
+ - [Tsungai Katsuro](https://github.com/TsungaiKats)
+ - [API_FOOTBALL](https://rapidapi.com/api-sports/api/api-football)
+ - [Readme.so](https://readme.so/editor)
 
 ## API Reference
+Jolpica. (n.d.). Jolpica F1 API. https://api.jolpi.ca/ergast/?format=api
 
-#### Get all items
+Found on RapidAPI at: https://rapidapi.com/
 
-```http
-  GET /api/items
-```
+API Reference
+### API Reference
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+#### Fetch all teams
+| Parameter | Type   | Description         |
+|-----------|--------|---------------------|
+| league    | string | Required. League ID |
+| season    | string | Required. Season year |
 
-#### Get item
+#### Fetch team statistics
+| Parameter | Type   | Description         |
+|-----------|--------|---------------------|
+| team      | string | Required. Team ID   |
+| league    | string | Required. League ID |
+| season    | string | Required. Season year |
 
-```http
-  GET /api/items/${id}
-```
+#### Fetch recent matches
+| Parameter | Type   | Description             |
+|-----------|--------|-------------------------|
+| league    | string | Required. League ID     |
+| season    | string | Required. Season year   |
+| last      | int    | Optional. Number of recent matches |
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+#### Fetch player statistics
+| Parameter | Type   | Description         |
+|-----------|--------|---------------------|
+| id        | string | Required. Player ID |
+| season    | string | Required. Season year |
 
-#### add(num1, num2)
+#### Fetch top scorers
+| Parameter | Type   | Description         |
+|-----------|--------|---------------------|
+| league    | string | Required. League ID |
+| season    | string | Required. Season year |
 
-Takes two numbers and returns the sum.
-
+#### Fetch injuries
+| Parameter | Type   | Description         |
+|-----------|--------|---------------------|
+| league    | string | Required. League ID |
+| season    | string | Required. Season year |
 
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
