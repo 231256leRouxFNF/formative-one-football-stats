@@ -64,6 +64,7 @@ npm install --save-dev @babel/core @babel/preset-env @babel/preset-react
 ```bash
 npm install @emotion/react @emotion/styled @mui/icons-material @mui/material axios axios-rate-limit bootstrap chart.js chartjs-plugin-datalabels prop-types react react-bootstrap react-chartjs-2 react-dom react-router-dom react-scripts react-select react-timeline react-vertical-timeline-component recharts web-vitals
 ```
+It does take awhile to install these
 ```bash
   cd football-stats
 ```
