@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { Typography, Grid } from "@mui/material";
+import NavBar from "../components/NavBar";  // Changed path
+import { BrowserRouter } from 'react-router-dom';
 import PlayerCard from "../components/PlayerCard";  // Changed path
 import MatchCard from "../components/MatchCard";    // Changed path
 import PlayerStatsChart from "../charts/PlayerStatsChart";  // Changed path
+import GoalsVsAssistsChart from "../charts/GoalsVsAssistsChart";  // Changed path
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Home = () => {
@@ -43,6 +46,12 @@ const Home = () => {
               <PlayerCard player={playerStats} />
               <div className="mt-4">
                 <PlayerStatsChart player={playerStats} />
+              </div>
+              <div className="mt-4">
+                <GoalsVsAssistsChart
+                  goals={playerStats.goals}
+                  assists={playerStats.assists}
+                />
               </div>
             </>
           )}
