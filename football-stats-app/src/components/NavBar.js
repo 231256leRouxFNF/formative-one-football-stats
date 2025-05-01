@@ -1,24 +1,55 @@
-import React from "react";
-import { Link } from "react-router-dom";
+// src/components/NavBar.jsx
+import React from 'react';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography, Box } from '@mui/material';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import CompareIcon from '@mui/icons-material/Compare';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import ShareIcon from '@mui/icons-material/Share';
+import { Link } from 'react-router-dom';
 
-export default function Sidebar() {
+const drawerWidth = 240;
+
+export default function NavBar() {
   return (
-    <div className="d-flex flex-column vh-100 p-3 bg-dark text-white" style={{ width: '250px' }}>
-      <h4 className="mb-4">Logo</h4>
-      <nav className="flex-grow-1">
-        <ul className="nav nav-pills flex-column">
-          <li className="nav-item mb-2">
-            <Link to="/" className="nav-link text-white">Home</Link>
-          </li>
-          <li className="nav-item mb-2">
-            <Link to="/compare" className="nav-link text-white">Compare</Link>
-          </li>
-          <li className="nav-item mb-2">
-            <Link to="/timeline" className="nav-link text-white">Timeline</Link>
-          </li>
-        </ul>
-      </nav>
-      <button className="btn btn-warning mt-auto">Share</button>
-    </div>
+    <Drawer
+      variant="permanent"
+      anchor="left"
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          bgcolor: '#1e1e1e',
+          color: 'white',
+          boxSizing: 'border-box',
+        },
+      }}
+    >
+      <Toolbar>
+        <Typography variant="h6" noWrap>
+          ⚽ StatsBoard
+        </Typography>
+      </Toolbar>
+      <Box sx={{ overflow: 'auto' }}>
+        <List>
+          <ListItem button component={Link} to="/">
+            <ListItemIcon><SportsSoccerIcon sx={{ color: 'white' }} /></ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button component={Link} to="/compare">
+            <ListItemIcon><CompareIcon sx={{ color: 'white' }} /></ListItemIcon>
+            <ListItemText primary="Compare" />
+          </ListItem>
+          <ListItem button component={Link} to="/timeline">
+            <ListItemIcon><TimelineIcon sx={{ color: 'white' }} /></ListItemIcon>
+            <ListItemText primary="Timeline" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon><ShareIcon sx={{ color: 'white' }} /></ListItemIcon>
+            <ListItemText primary="Share" />
+          </ListItem>
+        </List>
+      </Box>
+    </Drawer>
   );
 }

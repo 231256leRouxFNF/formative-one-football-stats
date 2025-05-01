@@ -1,41 +1,17 @@
 // src/App.jsx
-import Home from './pages/Home';
+import React from 'react';
+import { Box, CssBaseline } from '@mui/material';
 import NavBar from './components/NavBar';
+import Home from './pages/Home'; // or use <Outlet /> if routing
 
-function App() {
+export default function App() {
   return (
-    <div>
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
       <NavBar />
-      <Home />
-    </div>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: '#121212', minHeight: '100vh' }}>
+        <Home />
+      </Box>
+    </Box>
   );
 }
-
-export default App;
-
-
-// import logo from './logo.svg';
-// import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default App;
