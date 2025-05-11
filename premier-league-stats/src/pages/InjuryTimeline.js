@@ -1,6 +1,6 @@
 // src/pages/InjuryTimeline.jsx
 import React, { useEffect, useState } from 'react';
-import { getInjuries } from './api/footballAPI';
+import { getInjuries } from '../api/FootballAPI';
 import { Box, Typography, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 
 const InjuryTimeline = () => {

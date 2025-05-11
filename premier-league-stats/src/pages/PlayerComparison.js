@@ -1,8 +1,8 @@
 // src/pages/PlayerComparison.jsx
 import React, { useState } from 'react';
-import { getPlayerStats } from './api/footballAPI';
+import { getPlayerStats } from '../api/FootballAPI';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import ChartComponent from '../components/ChartComponent';
+import ChartComponent from '../components/Comparisoncard';
 
 const PlayerComparison = () => {
   const [player1Id, setPlayer1Id] = useState('');
@@ -75,9 +75,7 @@ const PlayerComparison = () => {
           Compare
         </Button>
       </Box>
-     
-::contentReference[oaicite:0]{index=0}
- 
+      
 {player1Stats && player2Stats && (
         <ChartComponent data={chartData} options={chartOptions} />
       )}
