@@ -1,46 +1,98 @@
 // src/pages/InjuryTimeline.jsx
-import React, { useEffect, useState } from 'react';
-import { getInjuries } from '../api/FootballAPI';
-import { Box, Typography, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import { Bar } from 'react-chartjs-2';
+import { injuryData } from '../data/injuries';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  TimeScale,
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  TimeScale
+);
 
 const InjuryTimeline = () => {
-  const [injuries, setInjuries] = useState([]);
+  // Prepare data for the chart
+  const labels = injuryData.map((entry) => entry.player);
+  const datasets = [
+    {
+      label: 'Injury Duration',
+      data: injuryData.map((entry) => ({
+        x: [new Date(entry.start), new Date(entry.end)],
+        y: entry.player,
+      })),
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+    },
+  ];
 
-  useEffect(() => {
-    const fetchInjuries = async () => {
-      const data = await getInjuries();
-      setInjuries(data);
-    };
-    fetchInjuries();
-  }, []);
+  const options = {
+    indexAxis: 'y',
+    responsive: true,
+    scales: {
+      x: {
+        type: 'time',
+        position: 'bottom',
+        time: {
+          unit: 'month',
+        },
+        title: {
+          display: true,
+          text: 'Date',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Player',
+        },
+      },
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'Premier League Injury Timeline',
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            // Find the corresponding entry in injuryData based on the player's name (y-axis label)
+            const playerName = context.raw.y;
+            const entry = injuryData.find((item) => item.player === playerName);
+            if (entry) {
+              return `${entry.injury}: ${entry.start} to ${entry.end}`;
+            }
+            return 'No data available';
+          },
+        },
+      },
+    },
+  };
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
         Injury Timeline
       </Typography>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Player</TableCell>
-            <TableCell>Team</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell>Start</TableCell>
-            <TableCell>End</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {injuries.map((injury, idx) => (
-            <TableRow key={idx}>
-              <TableCell>{injury.player.name}</TableCell>
-              <TableCell>{injury.team.name}</TableCell>
-              <TableCell>{injury.type}</TableCell>
-              <TableCell>{injury.start}</TableCell>
-              <TableCell>{injury.end || 'Ongoing'}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div className="d-flex flex-column align-items-center">
+        <div className="w-100 mb-3">
+          <Bar data={{ labels, datasets }} options={options} />
+        </div>
+      </div>
     </Box>
   );
 };

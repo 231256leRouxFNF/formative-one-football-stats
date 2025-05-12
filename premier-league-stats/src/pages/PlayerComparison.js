@@ -1,84 +1,110 @@
 // src/pages/PlayerComparison.jsx
 import React, { useState } from 'react';
-import { getPlayerStats } from '../api/FootballAPI';
-import { TextField, Button, Box, Typography } from '@mui/material';
-import ChartComponent from '../components/Comparisoncard';
+import { Box, Typography, Autocomplete, TextField } from '@mui/material';
+import StatCard from '../components/StatCard';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+
+// Mock data
+const teams = [
+  { label: 'Manchester United', players: ['Bruno Fernandes', 'Marcus Rashford'] },
+  { label: 'Liverpool', players: ['Mohamed Salah', 'Virgil van Dijk'] },
+  { label: 'Manchester City', players: ['Kevin De Bruyne', 'Erling Haaland'] },
+  // Add more teams and players as needed
+];
+
+const mockStats = {
+  'Bruno Fernandes': { goals: 12, assists: 8, appearances: 30 },
+  'Marcus Rashford': { goals: 15, assists: 5, appearances: 28 },
+  'Mohamed Salah': { goals: 20, assists: 10, appearances: 32 },
+  'Virgil van Dijk': { goals: 3, assists: 2, appearances: 30 },
+  'Kevin De Bruyne': { goals: 10, assists: 15, appearances: 29 },
+  'Erling Haaland': { goals: 25, assists: 5, appearances: 27 },
+};
 
 const PlayerComparison = () => {
-  const [player1Id, setPlayer1Id] = useState('');
-  const [player2Id, setPlayer2Id] = useState('');
-  const [player1Stats, setPlayer1Stats] = useState(null);
-  const [player2Stats, setPlayer2Stats] = useState(null);
+  const [selectedTeam1, setSelectedTeam1] = useState(null);
+  const [selectedPlayer1, setSelectedPlayer1] = useState(null);
+  const [selectedTeam2, setSelectedTeam2] = useState(null);
+  const [selectedPlayer2, setSelectedPlayer2] = useState(null);
 
-  const handleCompare = async () => {
-    const stats1 = await getPlayerStats(player1Id);
-    const stats2 = await getPlayerStats(player2Id);
-    setPlayer1Stats(stats1);
-    setPlayer2Stats(stats2);
+  const handleTeamChange1 = (event, newValue) => {
+    setSelectedTeam1(newValue);
+    setSelectedPlayer1(null); // Reset player selection when team changes
   };
 
-  const chartData = {
-    labels: ['Goals', 'Assists', 'Passes', 'Tackles'],
-    datasets: [
-      {
-        label: player1Stats?.player.name || 'Player 1',
-        data: [
-          player1Stats?.statistics[0].goals.total || 0,
-          player1Stats?.statistics[0].goals.assists || 0,
-          player1Stats?.statistics[0].passes.total || 0,
-          player1Stats?.statistics[0].tackles.total || 0,
-        ],
-        backgroundColor: 'rgba(75,192,192,0.6)',
-      },
-      {
-        label: player2Stats?.player.name || 'Player 2',
-        data: [
-          player2Stats?.statistics[0].goals.total || 0,
-          player2Stats?.statistics[0].goals.assists || 0,
-          player2Stats?.statistics[0].passes.total || 0,
-          player2Stats?.statistics[0].tackles.total || 0,
-        ],
-        backgroundColor: 'rgba(153,102,255,0.6)',
-      },
-    ],
+  const handlePlayerChange1 = (event, newValue) => {
+    setSelectedPlayer1(newValue);
   };
 
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: 'Player Comparison',
-      },
-    },
+  const handleTeamChange2 = (event, newValue) => {
+    setSelectedTeam2(newValue);
+    setSelectedPlayer2(null); // Reset player selection when team changes
+  };
+
+  const handlePlayerChange2 = (event, newValue) => {
+    setSelectedPlayer2(newValue);
   };
 
   return (
-    <Box sx={{ padding: 3 }}>
+    <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
         Player Comparison
       </Typography>
-      <Box sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>
-        <TextField
-          label="Player 1 ID"
-          variant="outlined"
-          value={player1Id}
-          onChange={(e) => setPlayer1Id(e.target.value)}
-        />
-        <TextField
-          label="Player 2 ID"
-          variant="outlined"
-          value={player2Id}
-          onChange={(e) => setPlayer2Id(e.target.value)}
-        />
-        <Button variant="contained" onClick={handleCompare}>
-          Compare
-        </Button>
-      </Box>
-      
-{player1Stats && player2Stats && (
-        <ChartComponent data={chartData} options={chartOptions} />
-      )}
+
+      {/* Two StatCards Side by Side */}
+      <div className="d-flex flex-wrap">
+        {/* StatCard 1 */}
+        <div className="p-2 flex-fill" style={{ minWidth: '300px' }}>
+          <Typography variant="h6" gutterBottom>
+            Player 1
+          </Typography>
+          <Autocomplete
+            options={teams}
+            getOptionLabel={(option) => option.label}
+            onChange={handleTeamChange1}
+            renderInput={(params) => <TextField {...params} label="Select Team" variant="outlined" />}
+          />
+          <Autocomplete
+            options={selectedTeam1 ? selectedTeam1.players : []}
+            getOptionLabel={(option) => option}
+            onChange={handlePlayerChange1}
+            renderInput={(params) => <TextField {...params} label="Select Player" variant="outlined" />}
+            disabled={!selectedTeam1}
+          />
+          {selectedPlayer1 && (
+            <StatCard
+              title={selectedPlayer1}
+              stats={mockStats[selectedPlayer1]}
+            />
+          )}
+        </div>
+
+        {/* StatCard 2 */}
+        <div className="p-2 flex-fill" style={{ minWidth: '300px' }}>
+          <Typography variant="h6" gutterBottom>
+            Player 2
+          </Typography>
+          <Autocomplete
+            options={teams}
+            getOptionLabel={(option) => option.label}
+            onChange={handleTeamChange2}
+            renderInput={(params) => <TextField {...params} label="Select Team" variant="outlined" />}
+          />
+          <Autocomplete
+            options={selectedTeam2 ? selectedTeam2.players : []}
+            getOptionLabel={(option) => option}
+            onChange={handlePlayerChange2}
+            renderInput={(params) => <TextField {...params} label="Select Player" variant="outlined" />}
+            disabled={!selectedTeam2}
+          />
+          {selectedPlayer2 && (
+            <StatCard
+              title={selectedPlayer2}
+              stats={mockStats[selectedPlayer2]}
+            />
+          )}
+        </div>
+      </div>
     </Box>
   );
 };
