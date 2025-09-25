@@ -7,8 +7,6 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.8",
     "@mui/material": "^6.4.9",
-    "axios": "^1.8.4",
-    "axios-rate-limit": "^1.4.0",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.8",
     "chartjs-plugin-datalabels": "^2.2.0",

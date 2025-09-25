@@ -9,11 +9,13 @@ export const useMatches = () => {
   useEffect(() => {
     const loadMatches = async () => {
       try {
+        setLoading(true);
         const data = await getRecentMatches();
         setMatches(data);
         setError(null);
       } catch (err) {
-        setError(err.message);
+        console.error('Error loading matches:', err);
+        setError(err.message || 'Failed to load matches');
       } finally {
         setLoading(false);
       }

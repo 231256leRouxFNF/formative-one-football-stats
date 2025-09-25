@@ -1,156 +1,178 @@
-.container {
-    padding: 20px;
-  }
-  
-  /* Home container styling */
-  .home-container {
-    padding: 20px 20px 20px 150px; /* Add left padding to move content into frame */
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
-  }
+/* HomePage Specific Styles */
 
-  .page-title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  
-  .col-md-4 {
-    padding: 10px;
-    flex: 0 0 33.3333%;
-    max-width: 33.3333%;
-  }
+.home-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+}
 
-  .col-md-8 {
-    padding: 10px;
-    flex: 0 0 66.6667%;
-    max-width: 66.6667%;
+.matches-section {
+  position: relative;
+}
+
+.matches-section::before {
+  content: '';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    var(--primary-green) 0%, 
+    var(--primary-green-dark) 50%, 
+    var(--accent-orange) 100%);
+  border-radius: var(--radius-sm);
+  opacity: 0.7;
+}
+
+/* Match Cards Enhancement */
+.match-card {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.match-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(0, 200, 150, 0.1), 
+    transparent);
+  transition: left 0.5s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.match-card:hover::before {
+  left: 100%;
+}
+
+/* Sidebar Enhancements */
+.sidebar {
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
+}
+
+.sidebar .stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar .stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    var(--primary-green), 
+    var(--primary-green-dark));
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+
+.sidebar .stat-card:hover::after {
+  transform: scaleY(1);
+}
+
+/* Animation for stats cards */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-card {
+  animation: slideInUp 0.6s ease forwards;
+}
+
+.stat-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+/* Loading State Enhancement */
+.loading-spinner div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.loading-spinner div::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--neutral-gray-300);
+  border-top: 2px solid var(--primary-green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hero Section Styling */
+.page-title {
+  background: linear-gradient(135deg, 
+    var(--neutral-gray-900) 0%, 
+    var(--primary-green-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .matches-section::before {
+    top: -0.5rem;
+    height: 3px;
+  }
+  
+  .sidebar {
+    position: static;
+    margin-top: 2rem;
+  }
+  
+  .sidebar .stat-card::after {
+    width: 100%;
+    height: 3px;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  
+  .sidebar .stat-card:hover::after {
+    transform: scaleX(1);
   }
   
   .match-card {
-    margin-bottom: 10px; /* Reduced margin */
-    flex: 1 1 calc(33.333% - 20px);
-    box-sizing: border-box;
+    margin-bottom: 1rem;
   }
-  
-  .most-goals-card {
-    height: 500px; /* Adjust height as needed */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    margin-bottom: 20px; /* Add some space below the card */
-  }
-  
-  .most-goals-chart {
-    display: flex;
-    justify-content: center; /* Center chart horizontally */
-  }
-  
-  .top-card {
-    height: 400px; /* Adjust height as needed */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    margin-bottom: 20px; /* Add some space below the card */
-  }
-  
-  .top-card-content {
-    padding: 20px;
-  }
-  
-  .top-card-chart {
-    display: flex;
-    justify-content: center; /* Center chart horizontally */
-  }
-  
-  .bottom-card {
-    height: 400px; /* Adjust height as needed */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    margin-bottom: 20px; /* Add some space below the card */
-  }
-  
-  .bottom-card-content {
-    padding: 20px;
-  }
-  
-  .bottom-card-image {
-    width: 100%;
-  }
-  
-  .bottom-card-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center text vertically */
-  }
-
- /* Matches grid styling */
-.matches-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
 }
 
-  .matches-grid .col-md-4 {
-    flex: 0 0 33.3333%;
-    max-width: 33.3333%;
-    height: 100%;
-    padding: 10px;
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .matches-section::before {
+    opacity: 0.5;
   }
-
-  .mt-4 {
-    margin-top: 1.5rem;
-  }
-
-  .loading-spinner, .error-message {
-    text-align: center;
-    margin-top: 20px;
-  }
-
-  /* Match card styling */
-.match-card {
-  flex: 1 1 calc(33.333% - 20px); /* 3 cards per row */
-  box-sizing: border-box;
 }
-
-/* Grid container for matches and top scorer */
-.grid-container {
-  display: grid;
-  grid-template-columns: 3fr 1fr; /* Matches take 3 parts, Top Scorer takes 1 part */
-  gap: 20px;
-  padding: 20px;
-  margin-left: 150px; /* Add left margin to move grid into frame */
-}
-
-  .most-goals {
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    /* width: 600px; */
-    padding-right: 500p;
-  }
-
-  /* .MuiCardContent-root {
-    padding-left: 200px;
-    padding-bottom: 100px;
-  } */
-
-  .team-attributes {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-  }
-
-  /* Top scorer card styling */
-  .top-scorer {
-    display: flex;
-    justify-content: center; /* Center the card horizontally */
-    align-items: flex-start; /* Align the card to the top */
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-  }
 
