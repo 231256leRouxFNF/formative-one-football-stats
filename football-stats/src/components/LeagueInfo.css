@@ -1,0 +1,68 @@
+.league-info-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.league-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.league-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f8f9fa;
+  padding: 10px;
+}
+
+.league-details {
+  flex: 1;
+}
+
+.league-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.league-abbr {
+  font-size: 16px;
+  color: #666;
+  margin: 0 0 5px 0;
+  font-weight: 500;
+}
+
+.league-season {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .league-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .league-logo {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .league-name {
+    font-size: 20px;
+  }
+  
+  .league-abbr {
+    font-size: 14px;
+  }
+}

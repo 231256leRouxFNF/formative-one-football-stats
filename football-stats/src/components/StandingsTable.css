@@ -1,0 +1,161 @@
+.standings-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.standings-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.standings-table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  min-width: 600px;
+}
+
+.standings-table thead {
+  background: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.standings-table th {
+  padding: 12px 8px;
+  text-align: center;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 14px;
+}
+
+.standings-table td {
+  padding: 10px 8px;
+  text-align: center;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 14px;
+}
+
+.standings-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.standings-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Position-based styling */
+.champions-league {
+  background-color: #d4edda;
+  border-left: 4px solid #28a745;
+}
+
+.europa-league {
+  background-color: #d1ecf1;
+  border-left: 4px solid #17a2b8;
+}
+
+.relegation {
+  background-color: #f8d7da;
+  border-left: 4px solid #dc3545;
+}
+
+/* Team name styling */
+.team-name {
+  text-align: left !important;
+  font-weight: 500;
+}
+
+.team-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Goal difference styling */
+.positive-gd {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.negative-gd {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.neutral-gd {
+  color: #6c757d;
+}
+
+/* Points styling */
+.points {
+  font-weight: 700;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+/* Position styling */
+.position {
+  font-weight: 700;
+  color: #333;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .standings-container {
+    padding: 15px;
+    margin: 10px 0;
+  }
+  
+  .standings-container h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .standings-table th,
+  .standings-table td {
+    padding: 8px 4px;
+    font-size: 12px;
+  }
+  
+  .team-logo {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .standings-table {
+    min-width: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .standings-table th,
+  .standings-table td {
+    padding: 6px 2px;
+    font-size: 11px;
+  }
+  
+  .standings-table {
+    min-width: 400px;
+  }
+}

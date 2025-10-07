@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CustomNavbar from './components/Navbar';
 import HomePage from './pages/HomePage';
+import LeaguesPage from './pages/LeaguesPage';
 import ComparisonPage from './pages/ComparisonPage';
 import TimelinePage from './pages/InjuryTimeline';
 import Footer from './components/Footer';
@@ -15,6 +16,7 @@ export default function App() {
         <div className="content-container">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/leagues" element={<LeaguesPage />} />
             <Route path="/compare" element={<ComparisonPage />} />
             <Route path="/timeline" element={<TimelinePage />} />
           </Routes>

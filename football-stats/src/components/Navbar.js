@@ -13,6 +13,7 @@ const CustomNavbar = () => {
       </Navbar.Brand>
       <Nav className="flex-column w-100">
         <Nav.Link as={Link} to="/" className="nav-link">Home</Nav.Link>
+        <Nav.Link as={Link} to="/leagues" className="nav-link">Leagues</Nav.Link>
         <Nav.Link as={Link} to="/compare" className="nav-link">Compare</Nav.Link>
         <Nav.Link as={Link} to="/timeline" className="nav-link">Timeline</Nav.Link>
       </Nav>

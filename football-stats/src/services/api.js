@@ -1,5 +1,8 @@
 import { getMockData, mockMatches, mockTopScorer, mockStandings, mockPlayers, mockInjuryData, mockGoalsPerLeague, mockTeamStats } from '../data/dummyData';
 
+// Football Standings API base URL
+const FOOTBALL_STANDINGS_API_BASE = 'https://api-football-standings.azharimm.site';
+
 // Mock API functions that simulate the original API interface
 export const fetchTeams = async () => {
   return await getMockData('players');
@@ -72,6 +75,65 @@ export const fetchPlayerData = async (playerId, season) => {
 
 export const fetchInjuries = async (leagueId, season) => {
   return await getMockData('injuryData');
+};
+
+// Football Standings API functions
+export const fetchAllLeagues = async () => {
+  try {
+    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching leagues:', error);
+    // Fallback to mock data if API fails
+    return { status: true, data: [] };
+  }
+};
+
+export const fetchLeagueDetails = async (leagueId) => {
+  try {
+    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues/${leagueId}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching league details:', error);
+    return { status: false, data: null };
+  }
+};
+
+export const fetchLeagueSeasons = async (leagueId) => {
+  try {
+    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues/${leagueId}/seasons`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching league seasons:', error);
+    return { status: false, data: null };
+  }
+};
+
+export const fetchLeagueStandings = async (leagueId, season = 2023, sort = 'asc') => {
+  try {
+    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues/${leagueId}/standings?season=${season}&sort=${sort}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching league standings:', error);
+    // Fallback to mock data if API fails
+    return await getMockData('standings');
+  }
 };
 
 // Export mock data directly for components that need it
