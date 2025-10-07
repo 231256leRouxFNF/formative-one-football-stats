@@ -97,3 +97,4 @@ export const useLeagueDetails = (leagueId) => {
 
   return { leagueDetails, loading, error };
 };
+

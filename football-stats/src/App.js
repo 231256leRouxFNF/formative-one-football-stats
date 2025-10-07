@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CustomNavbar from './components/Navbar';
+import ErrorBoundary from './components/ErrorBoundary';
 import HomePage from './pages/HomePage';
 import LeaguesPage from './pages/LeaguesPage';
 import ComparisonPage from './pages/ComparisonPage';
@@ -14,12 +15,14 @@ export default function App() {
       <div className="app-container">
         <CustomNavbar />
         <div className="content-container">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/leagues" element={<LeaguesPage />} />
-            <Route path="/compare" element={<ComparisonPage />} />
-            <Route path="/timeline" element={<TimelinePage />} />
-          </Routes>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/leagues" element={<LeaguesPage />} />
+              <Route path="/compare" element={<ComparisonPage />} />
+              <Route path="/timeline" element={<TimelinePage />} />
+            </Routes>
+          </ErrorBoundary>
         </div>
         <Footer />
       </div>

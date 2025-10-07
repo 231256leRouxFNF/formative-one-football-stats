@@ -28,3 +28,4 @@ const LeagueCard = ({ league, onSelectLeague }) => {
 };
 
 export default LeagueCard;
+

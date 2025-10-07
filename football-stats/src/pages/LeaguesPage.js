@@ -46,7 +46,9 @@ const LeaguesPage = () => {
       const response = await fetchLeagueStandings(league.id, season);
       
       if (response.status && response.data) {
-        setStandings(response.data.standings || []);
+        // Handle both API response format and fallback format
+        const standingsData = response.data.standings || response.data;
+        setStandings(Array.isArray(standingsData) ? standingsData : []);
       } else {
         setError('Failed to load standings');
       }

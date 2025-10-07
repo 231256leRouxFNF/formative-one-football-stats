@@ -30,3 +30,4 @@ const LeagueInfo = ({ league, season }) => {
 };
 
 export default LeagueInfo;
+

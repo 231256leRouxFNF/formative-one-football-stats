@@ -1,11 +1,11 @@
 import React from 'react';
-import ComparisonPage from '../components/ComparisonCard';
+import ComparisonCard from '../components/ComparisonCard';
 
-const App = () => {
+const ComparisonPage = () => {
   return (
     <div>
       <h1>Player Comparison</h1>
-      <ComparisonPage />
+      <ComparisonCard />
     </div>
   );
 };
