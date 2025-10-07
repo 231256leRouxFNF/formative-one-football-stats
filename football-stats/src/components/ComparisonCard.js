@@ -37,6 +37,9 @@ const ComparisonPage = () => {
     const p1 = allPlayers.find(p => p.id === player1Id);
     const p2 = allPlayers.find(p => p.id === player2Id);
     if (!isLoading && p1 && p2) {
+      if (!barChartRef.current || !radarChartRef.current || !pieChartRef.current) {
+        return;
+      }
       const stats1 = getStats(p1);
       const stats2 = getStats(p2);
 
@@ -179,6 +182,10 @@ const ComparisonPage = () => {
           <div className="spinner"></div>
           <p className="loading-text">Fetching Player Data...</p>
         </div>
+      ) : allPlayers.length < 2 ? (
+        <div className="loading-overlay">
+          <p className="loading-text">Not enough players available to compare.</p>
+        </div>
       ) : (
         <div className="comparison-content">
           <div className="player-header">
@@ -206,6 +213,26 @@ const ComparisonPage = () => {
                   <option key={p.id} value={p.id}>{p.name} ({p.team})</option>
                 ))}
               </select>
+            </div>
+          </div>
+
+          {/* Selected players quick info */}
+          <div className="charts-grid" style={{marginBottom: '1rem'}}>
+            <div className="chart-card">
+              {(() => { const p = allPlayers.find(pl => pl.id === player1Id); return p ? (
+                <div>
+                  <h3>{p.name} - {p.team}</h3>
+                  <p>Goals: {p.stats.goals} · Assists: {p.stats.assists} · Apps: {p.stats.appearances}</p>
+                </div>
+              ) : null; })()}
+            </div>
+            <div className="chart-card">
+              {(() => { const p = allPlayers.find(pl => pl.id === player2Id); return p ? (
+                <div>
+                  <h3>{p.name} - {p.team}</h3>
+                  <p>Goals: {p.stats.goals} · Assists: {p.stats.assists} · Apps: {p.stats.appearances}</p>
+                </div>
+              ) : null; })()}
             </div>
           </div>
 
