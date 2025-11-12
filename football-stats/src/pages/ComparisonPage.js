@@ -4,7 +4,7 @@ import ComparisonCard from '../components/ComparisonCard';
 const ComparisonPage = () => {
   return (
     <div>
-      <h1>Player Comparison</h1>
+      <h1>Team Comparison</h1>
       <ComparisonCard />
     </div>
   );
