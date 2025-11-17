@@ -1,163 +1,23 @@
-import { getMockData, mockMatches, mockTopScorer, mockStandings, mockPlayers, mockInjuryData, mockGoalsPerLeague, mockTeamStats } from '../data/dummyData';
+const SPORTMONKS_API_BASE = 'https://api.sportmonks.com/v3';
+const API_KEY = process.env.REACT_APP_SPORTMONKS_API_KEY; // in your .env file
 
-// Football Standings API base URL - using alternative endpoint
-const FOOTBALL_STANDINGS_API_BASE = 'https://api-football-standings.azharimm.dev';
-
-// Mock API functions that simulate the original API interface
-export const fetchTeams = async () => {
-  return await getMockData('players');
-};
-
-export const fetchTeamFixtures = async (teamId, season) => {
-  return await getMockData('matches');
-};
-
-export const fetchTeamStats = async (teamId, leagueId) => {
-  return await getMockData('teamStats', { teamName: teamId });
-};
-
-export const getRecentMatches = async (options = {}) => {
-  const matches = await getMockData('matches', { limit: options.last || 5 });
-  return matches;
-};
-
-export const getTeamStatistics = async (teamId, options = {}) => {
-  const teamName = getTeamNameById(teamId);
-  return await getMockData('teamStats', { teamName });
-};
-
-// Helper function to map team IDs to names
-const getTeamNameById = (teamId) => {
-  const teamMap = {
-    '1': 'Manchester City',
-    '2': 'Arsenal',
-    '3': 'Liverpool',
-    '4': 'Newcastle',
-    '5': 'Manchester United',
-    '6': 'Tottenham',
-    '7': 'Brighton',
-    '8': 'Aston Villa',
-    '9': 'West Ham',
-    '10': 'Chelsea'
-  };
-  return teamMap[teamId] || 'Manchester City';
-};
-
-export const getGoalsPerLeague = async (season = '2023') => {
-  return await getMockData('goalsPerLeague');
-};
-
-export const getStandings = async (season = '2023') => {
-  return await getMockData('standings');
-};
-
-export const getTopScorer = async (season = '2023') => {
-  return await getMockData('topScorer');
-};
-
-export const fetchPlayers = async () => {
-  return await getMockData('players');
-};
-
-export const fetchPlayerStats = async (fixtureId, teamId) => {
-  const players = await getMockData('players');
-  return players.filter(player => player.team.includes(getTeamNameById(teamId)));
-};
-
-export const fetchInjuryData = async (seasonStartDate, seasonEndDate, leagueId = 39) => {
-  return await getMockData('injuryData');
-};
-
-export const fetchPlayerData = async (playerId, season) => {
-  const players = await getMockData('players');
-  return players.find(player => player.id === parseInt(playerId)) || players[0];
-};
-
-export const fetchInjuries = async (leagueId, season) => {
-  return await getMockData('injuryData');
-};
-
-// Football Standings API functions
-export const fetchAllLeagues = async () => {
+export const fetchLeagues = async () => {
   try {
-    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    
+    const response = await fetch(`${SPORTMONKS_API_BASE}/soccer/leagues?api_token=${API_KEY}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
     const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching leagues:', error);
-    // Fallback to mock leagues data
-    return { 
-      status: true, 
-      data: [
-        {
-          id: 'eng.1',
-          name: 'English Premier League',
-          slug: 'english-premier-league',
-          abbr: 'Prem',
-          logos: {
-            light: 'https://a.espncdn.com/i/leaguelogos/soccer/500/23.png',
-            dark: 'https://a.espncdn.com/i/leaguelogos/soccer/500-dark/23.png'
-          }
-        },
-        {
-          id: 'esp.1',
-          name: 'Spanish La Liga',
-          slug: 'spanish-la-liga',
-          abbr: 'La Liga',
-          logos: {
-            light: 'https://a.espncdn.com/i/leaguelogos/soccer/500/15.png',
-            dark: 'https://a.espncdn.com/i/leaguelogos/soccer/500-dark/15.png'
-          }
-        },
-        {
-          id: 'ger.1',
-          name: 'German Bundesliga',
-          slug: 'german-bundesliga',
-          abbr: 'Bundesliga',
-          logos: {
-            light: 'https://a.espncdn.com/i/leaguelogos/soccer/500/10.png',
-            dark: 'https://a.espncdn.com/i/leaguelogos/soccer/500-dark/10.png'
-          }
-        },
-        {
-          id: 'ita.1',
-          name: 'Italian Serie A',
-          slug: 'italian-serie-a',
-          abbr: 'Serie A',
-          logos: {
-            light: 'https://a.espncdn.com/i/leaguelogos/soccer/500/12.png',
-            dark: 'https://a.espncdn.com/i/leaguelogos/soccer/500-dark/12.png'
-          }
-        },
-        {
-          id: 'fra.1',
-          name: 'French Ligue 1',
-          slug: 'french-ligue-1',
-          abbr: 'Ligue 1',
-          logos: {
-            light: 'https://a.espncdn.com/i/leaguelogos/soccer/500/9.png',
-            dark: 'https://a.espncdn.com/i/leaguelogos/soccer/500-dark/9.png'
-          }
-        }
-      ]
-    };
+    return null;
   }
 };
 
 export const fetchLeagueDetails = async (leagueId) => {
   try {
-    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues/${leagueId}`);
+    const response = await fetch(`${SPORTMONKS_API_BASE}/soccer/leagues/${leagueId}?api_token=${API_KEY}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -165,78 +25,124 @@ export const fetchLeagueDetails = async (leagueId) => {
     return data;
   } catch (error) {
     console.error('Error fetching league details:', error);
-    return { status: false, data: null };
+    return null;
   }
 };
 
-export const fetchLeagueSeasons = async (leagueId) => {
+export const fetchLeagueStandings = async (leagueId, season) => {
   try {
-    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues/${leagueId}/seasons`);
+    const response = await fetch(`${SPORTMONKS_API_BASE}/soccer/standings/${leagueId}?api_token=${API_KEY}&season=${season}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error fetching league seasons:', error);
-    return { status: false, data: null };
-  }
-};
-
-export const fetchLeagueStandings = async (leagueId, season = 2023, sort = 'asc') => {
-  try {
-    const response = await fetch(`${FOOTBALL_STANDINGS_API_BASE}/leagues/${leagueId}/standings?season=${season}&sort=${sort}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
     const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching league standings:', error);
-    // Fallback to mock standings data
-    return {
-      status: true,
-      data: {
-        name: getLeagueNameById(leagueId),
-        abbreviation: getLeagueAbbrById(leagueId),
-        seasonDisplay: `${season}-${season + 1}`,
-        season: season,
-        standings: await getMockData('standings')
-      }
-    };
+    return null;
   }
 };
 
-// Helper functions for fallback data
-const getLeagueNameById = (leagueId) => {
-  const leagueMap = {
-    'eng.1': 'English Premier League',
-    'esp.1': 'Spanish La Liga',
-    'ger.1': 'German Bundesliga',
-    'ita.1': 'Italian Serie A',
-    'fra.1': 'French Ligue 1'
-  };
-  return leagueMap[leagueId] || 'Unknown League';
+export const getStandings = async (leagueId, season) => {
+  try {
+    const response = await fetch(`${SPORTMONKS_API_BASE}/soccer/standings/${leagueId}?api_token=${API_KEY}&season=${season}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching standings:', error);
+    return null;
+  }
 };
 
-const getLeagueAbbrById = (leagueId) => {
-  const abbrMap = {
-    'eng.1': 'Prem',
-    'esp.1': 'La Liga',
-    'ger.1': 'Bundesliga',
-    'ita.1': 'Serie A',
-    'fra.1': 'Ligue 1'
-  };
-  return abbrMap[leagueId] || 'Unknown';
+export const getTopScorer = async (leagueId, season) => {
+  try {
+    const response = await fetch(`${SPORTMONKS_API_BASE}/soccer/topscorers/${leagueId}?api_token=${API_KEY}&season=${season}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching top scorer:', error);
+    return null;
+  }
 };
 
-// Export mock data directly for components that need it
-export { mockMatches, mockTopScorer, mockStandings, mockPlayers, mockInjuryData, mockGoalsPerLeague, mockTeamStats };
+export const getRecentMatches = async (leagueId, season) => {
+  if (!leagueId || !season) {
+    console.error('Missing leagueId or season parameter');
+    return null;
+  }
+
+  try {
+    const response = await fetch(`/api/v3/soccer/fixtures/${leagueId}?api_token=${API_KEY}&season=${season}&status=finished`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching recent matches:', error);
+    return null;
+  }
+};
+
+export const fetchAllLeagues = async () => {
+  try {
+    const response = await fetch(`/api/v3/soccer/leagues?api_token=${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('API Response:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching all leagues:', error);
+    return null;
+  }
+};
+
+export const fetchHeadToHeadFixtures = async (team1Id, team2Id) => {
+  try {
+    const response = await fetch(`${SPORTMONKS_API_BASE}/football/fixtures/head-to-head/${team1Id}/${team2Id}?include=participants;league;scores;state;venue;events&api_token=${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching head-to-head fixtures:', error);
+    return null;
+  }
+};
+
+export const fetchPlayerDetails = async (playerId) => {
+  try {
+    const response = await fetch(`${SPORTMONKS_API_BASE}/football/players/${playerId}?include=trophies.league;trophies.season;trophies.trophy;trophies.team;teams.team;statistics.details.type;statistics.team;statistics.season.league;latest.fixture.participants;latest.fixture.league;latest.fixture.scores;latest.details.type;nationality;detailedPosition;metadata.type&api_token=${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching player details:', error);
+    return null;
+  }
+};
+
+export const fetchTeamStatisticsBySeason = async (seasonId) => {
+  try {
+    const response = await fetch(`${SPORTMONKS_API_BASE}/football/teams/seasons/${seasonId}?include=statistics.details.type&filters=teamstatisticSeasons:${seasonId}&api_token=${API_KEY}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching team statistics by season:', error);
+    return null;
+  }
+};

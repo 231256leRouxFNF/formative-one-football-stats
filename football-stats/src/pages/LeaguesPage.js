@@ -91,6 +91,10 @@ const LeaguesPage = () => {
     );
   }
 
+  if (!leagues || !leagues.status) {
+    return <p>No leagues available</p>;
+  }
+
   return (
     <div className="leagues-page">
       <div className="leagues-header">
